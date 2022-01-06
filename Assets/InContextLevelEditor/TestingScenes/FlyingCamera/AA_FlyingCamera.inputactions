@@ -14,7 +14,7 @@
                     "interactions": ""
                 },
                 {
-                    "name": "Look",
+                    "name": "Look_old",
                     "type": "Value",
                     "id": "9dad316d-1b8d-40c1-a6a4-bdf84b6b179c",
                     "expectedControlType": "Vector2",
@@ -41,6 +41,14 @@
                     "name": "Move",
                     "type": "PassThrough",
                     "id": "75280cbb-dc45-4885-b10f-5e05e5265490",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Look",
+                    "type": "PassThrough",
+                    "id": "d851b502-1f34-48ca-8f09-fdfdd75db53f",
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": ""
@@ -186,7 +194,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Gamepad",
-                    "action": "Look",
+                    "action": "Look_old",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -197,7 +205,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse;Touch",
-                    "action": "Look",
+                    "action": "Look_old",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -208,7 +216,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Joystick",
-                    "action": "Look",
+                    "action": "Look_old",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -374,6 +382,39 @@
                     "processors": "",
                     "groups": "",
                     "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Vector 2 With One Modifier",
+                    "id": "344b0bd4-b8d3-40b3-9479-1fc883cc711a",
+                    "path": "Vector2WithOneModifier",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Look",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "vector2",
+                    "id": "e0c0f151-73af-4d7b-abcb-04da7f04c8eb",
+                    "path": "<Pointer>/delta",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Look",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "modifier",
+                    "id": "581a5159-b217-4ecd-9f8b-32f577bf52da",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Look",
                     "isComposite": false,
                     "isPartOfComposite": true
                 }

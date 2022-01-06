@@ -4,11 +4,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Composites;
 using UnityEngine.InputSystem.Layouts;
 using UnityEngine.InputSystem.Utilities;
- 
-// Use InputBindingComposite<TValue> as a base class for a composite that returns
-// values of type TValue.
-// NOTE: It is possible to define a composite that returns different kinds of values
-//but doing so requires deriving directly from InputBindingComposite.
+
 
 #if UNITY_EDITOR
 using UnityEditor;

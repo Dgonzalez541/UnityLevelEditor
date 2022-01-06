@@ -29,7 +29,7 @@ namespace Assets.InContextLevelEditor
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""Look"",
+                    ""name"": ""Look_old"",
                     ""type"": ""Value"",
                     ""id"": ""9dad316d-1b8d-40c1-a6a4-bdf84b6b179c"",
                     ""expectedControlType"": ""Vector2"",
@@ -56,6 +56,14 @@ namespace Assets.InContextLevelEditor
                     ""name"": ""Move"",
                     ""type"": ""PassThrough"",
                     ""id"": ""75280cbb-dc45-4885-b10f-5e05e5265490"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Look"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""d851b502-1f34-48ca-8f09-fdfdd75db53f"",
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """"
@@ -201,7 +209,7 @@ namespace Assets.InContextLevelEditor
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Gamepad"",
-                    ""action"": ""Look"",
+                    ""action"": ""Look_old"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -212,7 +220,7 @@ namespace Assets.InContextLevelEditor
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse;Touch"",
-                    ""action"": ""Look"",
+                    ""action"": ""Look_old"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -223,7 +231,7 @@ namespace Assets.InContextLevelEditor
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Joystick"",
-                    ""action"": ""Look"",
+                    ""action"": ""Look_old"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -391,6 +399,39 @@ namespace Assets.InContextLevelEditor
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Vector 2 With One Modifier"",
+                    ""id"": ""344b0bd4-b8d3-40b3-9479-1fc883cc711a"",
+                    ""path"": ""Vector2WithOneModifier"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Look"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""vector2"",
+                    ""id"": ""e0c0f151-73af-4d7b-abcb-04da7f04c8eb"",
+                    ""path"": ""<Pointer>/delta"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Look"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""modifier"",
+                    ""id"": ""581a5159-b217-4ecd-9f8b-32f577bf52da"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Look"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         }
@@ -400,10 +441,11 @@ namespace Assets.InContextLevelEditor
             // Player
             m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
             m_Player_Move_old = m_Player.FindAction("Move_old", throwIfNotFound: true);
-            m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
+            m_Player_Look_old = m_Player.FindAction("Look_old", throwIfNotFound: true);
             m_Player_Fire = m_Player.FindAction("Fire", throwIfNotFound: true);
             m_Player_Elevate = m_Player.FindAction("Elevate", throwIfNotFound: true);
             m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
+            m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -454,19 +496,21 @@ namespace Assets.InContextLevelEditor
         private readonly InputActionMap m_Player;
         private IPlayerActions m_PlayerActionsCallbackInterface;
         private readonly InputAction m_Player_Move_old;
-        private readonly InputAction m_Player_Look;
+        private readonly InputAction m_Player_Look_old;
         private readonly InputAction m_Player_Fire;
         private readonly InputAction m_Player_Elevate;
         private readonly InputAction m_Player_Move;
+        private readonly InputAction m_Player_Look;
         public struct PlayerActions
         {
             private @AA_FlyingCamera m_Wrapper;
             public PlayerActions(@AA_FlyingCamera wrapper) { m_Wrapper = wrapper; }
             public InputAction @Move_old => m_Wrapper.m_Player_Move_old;
-            public InputAction @Look => m_Wrapper.m_Player_Look;
+            public InputAction @Look_old => m_Wrapper.m_Player_Look_old;
             public InputAction @Fire => m_Wrapper.m_Player_Fire;
             public InputAction @Elevate => m_Wrapper.m_Player_Elevate;
             public InputAction @Move => m_Wrapper.m_Player_Move;
+            public InputAction @Look => m_Wrapper.m_Player_Look;
             public InputActionMap Get() { return m_Wrapper.m_Player; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -479,9 +523,9 @@ namespace Assets.InContextLevelEditor
                     @Move_old.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMove_old;
                     @Move_old.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMove_old;
                     @Move_old.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMove_old;
-                    @Look.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLook;
-                    @Look.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLook;
-                    @Look.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLook;
+                    @Look_old.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLook_old;
+                    @Look_old.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLook_old;
+                    @Look_old.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLook_old;
                     @Fire.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFire;
                     @Fire.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFire;
                     @Fire.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFire;
@@ -491,6 +535,9 @@ namespace Assets.InContextLevelEditor
                     @Move.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMove;
                     @Move.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMove;
                     @Move.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMove;
+                    @Look.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLook;
+                    @Look.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLook;
+                    @Look.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLook;
                 }
                 m_Wrapper.m_PlayerActionsCallbackInterface = instance;
                 if (instance != null)
@@ -498,9 +545,9 @@ namespace Assets.InContextLevelEditor
                     @Move_old.started += instance.OnMove_old;
                     @Move_old.performed += instance.OnMove_old;
                     @Move_old.canceled += instance.OnMove_old;
-                    @Look.started += instance.OnLook;
-                    @Look.performed += instance.OnLook;
-                    @Look.canceled += instance.OnLook;
+                    @Look_old.started += instance.OnLook_old;
+                    @Look_old.performed += instance.OnLook_old;
+                    @Look_old.canceled += instance.OnLook_old;
                     @Fire.started += instance.OnFire;
                     @Fire.performed += instance.OnFire;
                     @Fire.canceled += instance.OnFire;
@@ -510,6 +557,9 @@ namespace Assets.InContextLevelEditor
                     @Move.started += instance.OnMove;
                     @Move.performed += instance.OnMove;
                     @Move.canceled += instance.OnMove;
+                    @Look.started += instance.OnLook;
+                    @Look.performed += instance.OnLook;
+                    @Look.canceled += instance.OnLook;
                 }
             }
         }
@@ -517,10 +567,11 @@ namespace Assets.InContextLevelEditor
         public interface IPlayerActions
         {
             void OnMove_old(InputAction.CallbackContext context);
-            void OnLook(InputAction.CallbackContext context);
+            void OnLook_old(InputAction.CallbackContext context);
             void OnFire(InputAction.CallbackContext context);
             void OnElevate(InputAction.CallbackContext context);
             void OnMove(InputAction.CallbackContext context);
+            void OnLook(InputAction.CallbackContext context);
         }
     }
 }
