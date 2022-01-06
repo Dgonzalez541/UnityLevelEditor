@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Utilities;
 
-namespace Assets.InContextLevelEditor
+namespace InContextLevelEditor.Input
 {
     public class @AA_FlyingCamera : IInputActionCollection, IDisposable
     {

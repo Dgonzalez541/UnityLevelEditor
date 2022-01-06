@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Interactions;
-using Assets.InContextLevelEditor;
+using InContextLevelEditor.Input;
+using InContextLevelEditor.LevelEditor;
 
 namespace InContextLevelEditor.Camera
 {
