@@ -54,8 +54,8 @@ namespace Assets.InContextLevelEditor
                 },
                 {
                     ""name"": ""Move"",
-                    ""type"": ""Value"",
-                    ""id"": ""16f1c5c0-8ebc-4abe-8042-3f301930b910"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""75280cbb-dc45-4885-b10f-5e05e5265490"",
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """"
@@ -327,9 +327,9 @@ namespace Assets.InContextLevelEditor
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""Vector 2 With One Modifier"",
-                    ""id"": ""3290c5e1-7d25-42b8-bb7a-b0606953301d"",
-                    ""path"": ""Vector2WithOneModifier"",
+                    ""name"": ""Vector 2 Composite With One Modifier"",
+                    ""id"": ""97e279f3-be69-4296-bdb7-246956a6878c"",
+                    ""path"": ""Vector2CompositeWithOneModifier"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -339,7 +339,7 @@ namespace Assets.InContextLevelEditor
                 },
                 {
                     ""name"": ""modifier"",
-                    ""id"": ""290567ba-9842-4f2b-a178-4ce31ff1b334"",
+                    ""id"": ""08256c98-cf0d-49b5-8e2c-cf087ffac333"",
                     ""path"": ""<Mouse>/rightButton"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -350,7 +350,7 @@ namespace Assets.InContextLevelEditor
                 },
                 {
                     ""name"": ""up"",
-                    ""id"": ""4c952cd5-c35d-46b3-8e64-f2fa1574a238"",
+                    ""id"": ""e4d8e04d-f307-4aa3-98af-09b4677f2733"",
                     ""path"": ""<Keyboard>/w"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -361,7 +361,7 @@ namespace Assets.InContextLevelEditor
                 },
                 {
                     ""name"": ""down"",
-                    ""id"": ""4b67e7cf-aeee-4c1f-b6e9-b2e1c447251f"",
+                    ""id"": ""942f6da0-7b7b-405c-af2c-d939823272f9"",
                     ""path"": ""<Keyboard>/s"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -372,7 +372,7 @@ namespace Assets.InContextLevelEditor
                 },
                 {
                     ""name"": ""left"",
-                    ""id"": ""aa5c4e4f-900f-4f6a-ad33-83d245342102"",
+                    ""id"": ""1e3831aa-a00b-4e25-b94f-8dd3887ae0cd"",
                     ""path"": ""<Keyboard>/a"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -383,7 +383,7 @@ namespace Assets.InContextLevelEditor
                 },
                 {
                     ""name"": ""right"",
-                    ""id"": ""fed5b241-0ddb-4ffb-bc7c-43532c7aaf56"",
+                    ""id"": ""808a6ddc-67d5-4944-bf31-47bd54efdae6"",
                     ""path"": ""<Keyboard>/d"",
                     ""interactions"": """",
                     ""processors"": """",

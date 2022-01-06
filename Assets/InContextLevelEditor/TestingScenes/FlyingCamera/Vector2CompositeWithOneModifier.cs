@@ -10,14 +10,14 @@ using UnityEditor;
 [InitializeOnLoad]
 #endif
 [DisplayStringFormat("{firstPart}+{secondPart}")]
-public class Vector2WithOneModifier : Vector2Composite
+public class Vector2CompositeWithOneModifier : Vector2Composite
 {
  
     [InputControl(layout = "Button")]
     public int modifier;
  
 #if UNITY_EDITOR
-    static Vector2WithOneModifier()
+    static Vector2CompositeWithOneModifier()
     {
         Initialize();
     }
@@ -26,7 +26,7 @@ public class Vector2WithOneModifier : Vector2Composite
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
     private static void Initialize()
     {
-        InputSystem.RegisterBindingComposite<Vector2WithOneModifier>();
+        InputSystem.RegisterBindingComposite<Vector2CompositeWithOneModifier>();
     }
  
     public override Vector2 ReadValue(ref InputBindingCompositeContext context)
