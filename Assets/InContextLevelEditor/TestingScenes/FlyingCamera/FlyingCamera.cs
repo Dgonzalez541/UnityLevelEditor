@@ -17,14 +17,13 @@ public class FlyingCamera : MonoBehaviour
     {
         m_Controls = new AA_FlyingCamera();
 
-        m_Controls.Player.Elevate.started += Test;
+        //m_Controls.Player.Elevate.started += Test;
     }
 
-    private void Test(InputAction.CallbackContext obj)
-    {
-         Debug.Log($"CTX value: {m_Controls.Player.Elevate.ReadValue<float>()}");
-        Elevate(m_Controls.Player.Elevate.ReadValue<float>());
-    }
+    // private void Test(InputAction.CallbackContext obj)
+    // {
+
+    // }
 
     public void OnEnable()
     {

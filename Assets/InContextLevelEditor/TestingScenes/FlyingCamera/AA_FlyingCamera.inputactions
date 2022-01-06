@@ -260,10 +260,10 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "QE",
-                    "id": "e0c3bd4a-4f43-4e3c-b699-ba38a7234d6a",
-                    "path": "1DAxis",
-                    "interactions": "Hold",
+                    "name": "1D Axis With One Modifier",
+                    "id": "d4dbb890-a2ba-4494-baac-4a8eb77296bf",
+                    "path": "_1DAxisWithOneModifier",
+                    "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Elevate",
@@ -271,9 +271,9 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "positive",
-                    "id": "e7a8bc57-70fe-491e-a451-8a7e20be3994",
-                    "path": "<Keyboard>/e",
+                    "name": "modifier",
+                    "id": "4ae0aca4-10fa-49e0-98db-be66119e5896",
+                    "path": "<Mouse>/rightButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -283,8 +283,19 @@
                 },
                 {
                     "name": "negative",
-                    "id": "bb8ac126-a9f4-4c5f-9533-d61335447458",
+                    "id": "82c5d4b2-fe9c-4ebb-bbcc-d1d8ad52de92",
                     "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Elevate",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "6d09ce39-b409-4119-ae16-a1edf82d9f33",
+                    "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
