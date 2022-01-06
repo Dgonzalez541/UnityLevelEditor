@@ -6,7 +6,7 @@ using UnityEngine.InputSystem.Interactions;
 using InContextLevelEditor.Input;
 using InContextLevelEditor.LevelEditor;
 
-namespace InContextLevelEditor.Camera
+namespace InContextLevelEditor.FlyingCamera
 {
     public class FlyingCamera : MonoBehaviour
     {
@@ -16,17 +16,24 @@ namespace InContextLevelEditor.Camera
         private AA_FlyingCamera m_Controls;
         private Vector2 m_Rotation;
 
+        [SerializeField] ShapeGenerator shapeGenerator;
+
+        Camera mainCamera;
+
         public void Awake()
         {
             m_Controls = new AA_FlyingCamera();
 
-            //m_Controls.Player.Elevate.started += Test;
+            m_Controls.Player.Fire.performed += SpawnObject;
+
+            mainCamera = GetComponent<Camera>();
+            Debug.Log($"Camer: {mainCamera}");
         }
 
-        // private void Test(InputAction.CallbackContext obj)
-        // {
-
-        // }
+        private void SpawnObject(InputAction.CallbackContext obj)
+        {
+           shapeGenerator.SpawnGameObjectAtMousePosition();
+        }
 
         public void OnEnable()
         {
@@ -72,11 +79,6 @@ namespace InContextLevelEditor.Camera
             m_Rotation.y += rotate.x * scaledRotateSpeed;
             m_Rotation.x = Mathf.Clamp(m_Rotation.x - rotate.y * scaledRotateSpeed, -89, 89);
             transform.localEulerAngles = m_Rotation;
-        }
-
-        private void Fire()
-        {
-
         }
     }
 }
