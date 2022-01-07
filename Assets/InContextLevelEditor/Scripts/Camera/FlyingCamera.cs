@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Interactions;
 using InContextLevelEditor.Input;
 using InContextLevelEditor.LevelEditor;
+using UnityEngine.EventSystems;
 
 namespace InContextLevelEditor.FlyingCamera
 {
@@ -20,19 +21,45 @@ namespace InContextLevelEditor.FlyingCamera
 
         Camera mainCamera;
 
+        [SerializeField] PlayerInput playerInput; 
+        private PointerEventData m_PointerData;
+        private List<RaycastResult> m_RaycastResults = new List<RaycastResult>();
+
         public void Awake()
         {
             m_Controls = new AA_FlyingCamera();
 
-            m_Controls.Player.Fire.performed += SpawnObject;
+            m_Controls.Player.Fire.performed += Fire;
 
             mainCamera = GetComponent<Camera>();
-            Debug.Log($"Camer: {mainCamera}");
         }
 
-        private void SpawnObject(InputAction.CallbackContext obj)
+        private void Fire(InputAction.CallbackContext obj)
         {
+            if (!obj.performed)
+            return;
+
+            var device = playerInput.GetDevice<Pointer>();
+            Debug.Log("Fire performed");
+            Debug.Log($"Device: {device}");
+            Debug.Log($"IsRayCastHittingUIObject: {IsRaycastHittingUIObject(device.position.ReadValue())}");
+            
+            if (device != null && IsRaycastHittingUIObject(device.position.ReadValue()))
+            {
+                Debug.Log($"Device: {device}");
+                
+                return;
+            }
            shapeGenerator.SpawnGameObjectAtMousePosition();
+        }
+
+        private bool IsRaycastHittingUIObject(Vector2 position)
+        {
+            if (m_PointerData == null)
+                m_PointerData = new PointerEventData(EventSystem.current);
+            m_PointerData.position = position;
+            EventSystem.current.RaycastAll(m_PointerData, m_RaycastResults);
+            return m_RaycastResults.Count > 0;
         }
 
         public void OnEnable()
