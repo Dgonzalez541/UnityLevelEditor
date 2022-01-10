@@ -1,0 +1,8 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
+    <ui:VisualElement name="ObjectSelectionPane" picking-mode="Ignore" style="flex-grow: 1; background-color: rgba(233, 0, 0, 0.65); align-items: center; justify-content: center; visibility: visible; display: flex; flex-direction: row; bottom: 10px; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; left: 10px; height: 74px; position: absolute;">
+        <ui:Button display-tooltip-when-elided="true" name="ShapeSelectButton" class="ShapeSelectorButtonStyle ShapeSelectButtonStyle" />
+        <ui:Button display-tooltip-when-elided="true" name="ShapeSelectButton" class="ShapeSelectorButtonStyle ShapeSelectButtonStyle" />
+        <ui:Button display-tooltip-when-elided="true" name="ShapeSelectButton" class="ShapeSelectorButtonStyle ShapeSelectButtonStyle" />
+        <ui:Button display-tooltip-when-elided="true" name="ShapeSelectButton" class="ShapeSelectorButtonStyle ShapeSelectButtonStyle" />
+    </ui:VisualElement>
+</ui:UXML>

@@ -1,0 +1,10 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="/Assets/InContextLevelEditor/UI/Styles/ShapeSelectButtonStyle.uss" />
+    <ui:VisualElement name="Background" picking-mode="Ignore" style="flex-grow: 1; background-color: rgba(3, 43, 219, 0); align-items: center; justify-content: center; visibility: visible; display: flex; flex-direction: column-reverse; bottom: auto; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; left: auto;">
+        <ui:VisualElement name="ObjectSelectionPane" picking-mode="Ignore" style="flex-grow: 1; background-color: rgba(233, 0, 0, 0); align-items: center; justify-content: center; visibility: visible; display: flex; flex-direction: row; bottom: 10px; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; left: 10px; height: 74px; position: absolute;">
+            <ui:Button display-tooltip-when-elided="true" name="CylinderButton" class="ShapeSelectorButtonStyle ShapeSelectButtonStyle" style="background-image: url(&apos;/Assets/InContextLevelEditor/Textures/GrayCylinder.png&apos;); -unity-background-scale-mode: scale-to-fit; -unity-slice-top: 7; -unity-slice-bottom: 7; -unity-slice-left: 7; -unity-slice-right: 7;" />
+            <ui:Button display-tooltip-when-elided="true" name="SphereButton" class="ShapeSelectorButtonStyle ShapeSelectButtonStyle" style="background-image: url(&apos;/Assets/InContextLevelEditor/Textures/GraySphere.png&apos;);" />
+            <ui:Button display-tooltip-when-elided="true" name="CubeButton" class="ShapeSelectorButtonStyle ShapeSelectButtonStyle" style="background-image: url(&apos;/Assets/InContextLevelEditor/Textures/GrayCube.png#GrayCube&apos;); -unity-slice-left: 0; -unity-slice-top: 0; -unity-slice-right: 0; -unity-slice-bottom: 4;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

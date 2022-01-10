@@ -1,6 +1,6 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="Styles/ButtonStyle.uss" />
-    <ui:VisualElement name="Background" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); align-items: center; justify-content: center; visibility: visible; display: flex;">
+    <ui:VisualElement name="Background" picking-mode="Ignore" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); align-items: center; justify-content: center; visibility: visible; display: flex;">
         <ui:VisualElement style="height: 486px; width: 372px; background-color: rgb(255, 255, 255); border-top-left-radius: 16px; border-bottom-left-radius: 16px; border-top-right-radius: 16px; border-bottom-right-radius: 16px; align-items: center; justify-content: center;">
             <ui:Label text="Main Menu" display-tooltip-when-elided="true" name="ButtonLable1" style="font-size: 20px; position: absolute; top: 20px;" />
             <ui:Button text="Start Game" display-tooltip-when-elided="true" name="StartButton" class="ButtonStyle" />

@@ -1,0 +1,71 @@
+.ShapeSelectButtonStyle {
+    background-color: rgba(39, 130, 248, 255);
+    width: 70px;
+    height: 70px;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+    justify-content: flex-end;
+    align-items: center;
+    margin-left: 23px;
+    margin-right: 23px;
+    margin-top: 23px;
+    margin-bottom: 23px;
+    border-left-width: 4px;
+    border-right-width: 4px;
+    border-top-width: 4px;
+    border-bottom-width: 4px;
+    border-left-color: rgba(0, 0, 0, 255);
+    border-right-color: rgba(0, 0, 0, 255);
+    border-top-color: rgba(0, 0, 0, 255);
+    border-bottom-color: rgba(0, 0, 0, 255);
+}
+
+.ShapeSelectButtonStyle:hover {
+    background-color: rgb(25, 76, 144);
+    width: 70px;
+    height: 70px;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+    justify-content: flex-end;
+    align-items: center;
+    margin-left: 23px;
+    margin-right: 23px;
+    margin-top: 23px;
+    margin-bottom: 23px;
+    border-left-width: 4px;
+    border-right-width: 4px;
+    border-top-width: 4px;
+    border-bottom-width: 4px;
+    border-left-color: rgb(0, 0, 0);
+    border-right-color: rgb(0, 0, 0);
+    border-top-color: rgb(0, 0, 0);
+    border-bottom-color: rgb(0, 0, 0);
+}
+
+.ShapeSelectButtonStyle:active {
+    background-color: rgb(5, 25, 51);
+    width: 70px;
+    height: 70px;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+    justify-content: flex-end;
+    align-items: center;
+    margin-left: 23px;
+    margin-right: 23px;
+    margin-top: 23px;
+    margin-bottom: 23px;
+    border-left-width: 4px;
+    border-right-width: 4px;
+    border-top-width: 4px;
+    border-bottom-width: 4px;
+    border-left-color: rgb(0, 0, 0);
+    border-right-color: rgb(0, 0, 0);
+    border-top-color: rgb(0, 0, 0);
+    border-bottom-color: rgb(0, 0, 0);
+}
