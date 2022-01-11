@@ -7,9 +7,9 @@ using InContextLevelEditor.Input;
 using InContextLevelEditor.LevelEditor;
 using UnityEngine.EventSystems;
 
-namespace InContextLevelEditor.FlyingCamera
+namespace InContextLevelEditor.Player
 {
-    public class FlyingCamera : MonoBehaviour
+    public class Player : MonoBehaviour
     {
         public float moveSpeed;
         public float rotateSpeed;
