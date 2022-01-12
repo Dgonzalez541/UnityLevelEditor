@@ -11,13 +11,6 @@ using InContextLevelEditor.Strategy;
 
 namespace InContextLevelEditor.Player
 {
-    enum InteractionState
-    {
-        Translate,
-        Rotate
-    }
-
-    [RequireComponent(typeof(EntitySpawner))]
     public class Player : MonoBehaviour
     {
         public float moveSpeed;
@@ -26,33 +19,26 @@ namespace InContextLevelEditor.Player
         private AA_FlyingCamera m_Controls;
         private Vector2 m_Rotation;
 
-        [SerializeField] EntitySpawner entitySpawner;
-
-        Camera mainCamera;
-
         [SerializeField] PlayerInput playerInput; 
         private PointerEventData m_PointerData;
         private List<RaycastResult> m_RaycastResults = new List<RaycastResult>();
 
-        public IEntity SelectedEntity {get; private set;}
-
-        InteractionState CurrentInteraction;
-
-        [SerializeField] GameObject testingEntity;
+        [SerializeField] LevelEditorController editorController;
 
         public void Awake()
         {
             m_Controls = new AA_FlyingCamera();
             m_Controls.Player.Fire.performed += Fire;
+        }
 
-            mainCamera = GetComponent<Camera>();
+        public void OnEnable()
+        {
+            m_Controls.Enable();
+        }
 
-            IEntity entity = testingEntity.GetComponent<IEntity>();
-            entitySpawner = GetComponent<EntitySpawner>();
-            entitySpawner.SetEntityToPlace(entity);
-
-            CurrentInteraction = InteractionState.Translate;
-            SelectedEntity = entity;
+        public void OnDisable()
+        {
+            m_Controls.Disable();
         }
 
         private void Fire(InputAction.CallbackContext obj)
@@ -69,92 +55,7 @@ namespace InContextLevelEditor.Player
             if (IsRaycastHittingUIObject(position))     
             return;
 
-            IEntity entity = IsRaycastHittingEntity(position);
-            if(entity != null)
-            {
-                Debug.Log($"Hit entity {entity.GameObject}");
-
-                if(entity != SelectedEntity)
-                {
-                    Debug.Log("Entity is not selected entity");
-                    SetEntity(entity.GameObject);
-                    EnableEntityInteractions(entity);
-                }
-                else //
-                {
-                    Debug.Log($"Hit selected entity");
-                    DetermineAction(entity, CurrentInteraction, obj.action);
-                }
-            }
-            else//Not hitting enity, so spawn new entity
-            {
-                Debug.Log("Did not hit an entity, spawingin new one");
-                GameObject entityObject = entitySpawner.SpawnGameObjectAtMousePosition(testingEntity, position);
-                entity = entityObject.GetComponent<IEntity>();
-                SetEntity(entityObject);
-                EnableEntityInteractions(entity);
-            } 
-        }
-
-        void DetermineAction(IEntity entity, InteractionState currentInteraction, InputAction action)
-        {
-            if(currentInteraction == InteractionState.Translate)
-            {
-                Translate translate = new Translate(entity, action);
-                translate.Execute();
-            }
-
-            if(currentInteraction == InteractionState.Rotate)
-            {
-                //Rotate rotate = new Rotate()
-            }
-        }
-
-        void EnableEntityInteractions(IEntity entity)
-        {
-            //Enable Translate
-            //Enable Rotate
-            if(entity is IShapeEntity)
-            {
-                //Enable Color change
-            }
-
-            if(entity is IEntity)
-            {
-                //Enable Intensity change
-            }
-        }
-
-        void DisableEntityInteractions(IEntity entity)
-        {
-            //Disable Translate
-            //Disable Rotate
-
-            if(entity is IShapeEntity)
-            {
-                //Enable Color change
-            }
-
-            if(entity is IEntity)
-            {
-                //Enable Intensity change
-            }
-        }
-
-        public void SetEntity(GameObject newEntityGameObject)
-        {
-            SelectedEntity.Unhighlight();
-            DisableEntityInteractions(SelectedEntity);
-
-            SelectedEntity = newEntityGameObject.GetComponent<IEntity>();
-            SelectedEntity.Highlight();
-        }
-
-        public void DisableActions()
-        {
-            throw new NotImplementedException();
-            //Diable Color change
-            //Disable Intensity change;
+            editorController.DetermineHitEntity(position, obj);
         }
 
         private bool IsRaycastHittingUIObject(Vector2 position)
@@ -164,28 +65,6 @@ namespace InContextLevelEditor.Player
             m_PointerData.position = position;
             EventSystem.current.RaycastAll(m_PointerData, m_RaycastResults);
             return m_RaycastResults.Count > 0;
-        }
-
-        private IEntity IsRaycastHittingEntity(Vector2 mousePosition)
-        {
-            RaycastHit hit;
-            Ray ray = mainCamera.ScreenPointToRay(mousePosition);
-            if(Physics.Raycast(ray, out hit))
-            {
-                IEntity entity = hit.collider.gameObject.GetComponentInChildren<IEntity>();
-                return entity;       
-            }
-            return null;
-        }
-
-        public void OnEnable()
-        {
-            m_Controls.Enable();
-        }
-
-        public void OnDisable()
-        {
-            m_Controls.Disable();
         }
 
         public void Update()
