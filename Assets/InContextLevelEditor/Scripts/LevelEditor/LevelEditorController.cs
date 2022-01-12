@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,25 +19,38 @@ namespace InContextLevelEditor.LevelEditor
 
         public IEntity SelectedEntity {get; private set;}
         InteractionState CurrentInteraction;
+        public Type EntityToPlace {get; private set;}
 
-        public IEntity EntityToPlace {get; private set;}
+        public List<GameObject> SpawnedEntities {get; private set;}
 
         void Awake()
         {
             IEntity entity = testingEntity.GetComponent<IEntity>();
-            EntityToPlace = entity;
+            EntityToPlace = entity.GetType();
 
             CurrentInteraction = InteractionState.Translate;
             SelectedEntity = entity;
+
+            SpawnedEntities = new List<GameObject>();
         }
 
-        public void SetEntity(IEntity newEntity)
+        public void SelectEntity(IEntity newEntity)
         {
             SelectedEntity.Unhighlight();
             DisableEntityInteractions(SelectedEntity);
+            UnhighlightAllEntities();
 
             SelectedEntity = newEntity;
             SelectedEntity.Highlight();
+            EnableEntityInteractions(SelectedEntity);
+        }
+
+        void UnhighlightAllEntities()
+        {
+            foreach(var go in SpawnedEntities)
+            {
+                go.GetComponent<IEntity>().Unhighlight();
+            }
         }
 
         public IEntity DetermineHitEntity(Vector2 position, InputAction.CallbackContext obj)
@@ -44,27 +58,22 @@ namespace InContextLevelEditor.LevelEditor
             IEntity entity = IsRaycastHittingEntity(position);
             if(entity != null)
             {
-                Debug.Log($"Hit entity {entity.GameObject}");
-
                 if(entity != SelectedEntity)
                 {
-                    Debug.Log("Entity is not selected entity");
-                    SetEntity(entity);
-                    EnableEntityInteractions(entity);
+                    SelectEntity(entity);
                 }
-                else //
+                else
                 {
-                    Debug.Log($"Hit selected entity");
                     DetermineAction(entity, CurrentInteraction, obj.action);
                 }
             }
             else//Not hitting enity, so spawn new entity
             {
-                Debug.Log("Did not hit an entity, spawingin new one");
                 GameObject entityObject = SpawnGameObjectAtMousePosition(testingEntity, position);
                 entity = entityObject.GetComponent<IEntity>();
-                SetEntity(entity);
-                EnableEntityInteractions(entity);
+
+                SpawnedEntities.Add(entityObject);
+                SelectEntity(entity);   
             }
             return entity; 
         }
@@ -88,8 +97,8 @@ namespace InContextLevelEditor.LevelEditor
             if(Physics.Raycast(ray, out hit))
             {
                 
-                Instantiate(go, hit.point, Quaternion.identity);   
-                return go;
+                GameObject instance = Instantiate(go, hit.point, Quaternion.identity) as GameObject;   
+                return instance;
             }
             return null;
         }
