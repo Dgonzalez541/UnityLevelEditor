@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using InContextLevelEditor.Strategy;
 using UnityEngine.InputSystem;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
+using InContextLevelEditor.UI;
 
 namespace InContextLevelEditor.LevelEditor
 {
@@ -15,42 +18,44 @@ namespace InContextLevelEditor.LevelEditor
 
     public class LevelEditorController : MonoBehaviour
     {
-        [SerializeField] GameObject testingEntity;
-
         public IEntity SelectedEntity {get; private set;}
         InteractionState CurrentInteraction;
-        public Type EntityToPlace {get; private set;}
 
+        public string EntityToPlaceAddress {get; private set;}
         public List<GameObject> SpawnedEntities {get; private set;}
+        
+        [SerializeField] string defaultEntityAddress;
+        [SerializeField] List<string> entityAddresses;
+
+        [SerializeField] MainWindowUIController mainWindowUIController;
 
         void Awake()
         {
-            IEntity entity = testingEntity.GetComponent<IEntity>();
-            EntityToPlace = entity.GetType();
-
             CurrentInteraction = InteractionState.Translate;
-            SelectedEntity = entity;
-
             SpawnedEntities = new List<GameObject>();
+
+            LoadAssets();
+            SetEntityToPlace(defaultEntityAddress);
+
+            mainWindowUIController.OnButtonPressHandler += OnEntitySelect;
         }
 
-        public void SelectEntity(IEntity newEntity)
+        private void OnEntitySelect(object sender, EntitySelectionEventArgs e)
         {
-            SelectedEntity.Unhighlight();
-            DisableEntityInteractions(SelectedEntity);
-            UnhighlightAllEntities();
-
-            SelectedEntity = newEntity;
-            SelectedEntity.Highlight();
-            EnableEntityInteractions(SelectedEntity);
+            EntityToPlaceAddress = e.AssetAddress;
         }
 
-        void UnhighlightAllEntities()
+        void LoadAssets()
         {
-            foreach(var go in SpawnedEntities)
+            foreach(string address in entityAddresses)
             {
-                go.GetComponent<IEntity>().Unhighlight();
+                Addressables.LoadAssetAsync<GameObject>(address);
             }
+        }
+        
+        void SetEntityToPlace(string newEntityAddress)
+        {
+            EntityToPlaceAddress = newEntityAddress;
         }
 
         public IEntity DetermineHitEntity(Vector2 position, InputAction.CallbackContext obj)
@@ -69,11 +74,7 @@ namespace InContextLevelEditor.LevelEditor
             }
             else//Not hitting enity, so spawn new entity
             {
-                GameObject entityObject = SpawnGameObjectAtMousePosition(testingEntity, position);
-                entity = entityObject.GetComponent<IEntity>();
-
-                SpawnedEntities.Add(entityObject);
-                SelectEntity(entity);   
+                StartCoroutine(SpawnGameObjectAtMousePosition(EntityToPlaceAddress, position));
             }
             return entity; 
         }
@@ -90,17 +91,40 @@ namespace InContextLevelEditor.LevelEditor
             return null;
         }
 
-        public GameObject SpawnGameObjectAtMousePosition(GameObject go, Vector2 mousePosition)
+        IEnumerator SpawnGameObjectAtMousePosition(string assetAddress, Vector2 mousePosition)
         {
             RaycastHit hit;
             Ray ray = Camera.main.ScreenPointToRay(mousePosition);
             if(Physics.Raycast(ray, out hit))
             {
-                
-                GameObject instance = Instantiate(go, hit.point, Quaternion.identity) as GameObject;   
-                return instance;
+                Addressables.InstantiateAsync(assetAddress, hit.point, Quaternion.identity).Completed += OnInstantiateEntity;   
             }
-            return null;
+            yield return null;
+        }
+
+        private void OnInstantiateEntity(AsyncOperationHandle<GameObject> obj)
+        {
+            GameObject go = obj.Result;
+            SpawnedEntities.Add(go);
+            SelectEntity(go.GetComponent<IEntity>());   
+        }
+
+        public void SelectEntity(IEntity newEntity)
+        {
+            DisableEntityInteractions(SelectedEntity);
+            UnhighlightAllEntities();
+
+            SelectedEntity = newEntity;
+            SelectedEntity.Highlight();
+            EnableEntityInteractions(SelectedEntity);
+        }
+
+        void UnhighlightAllEntities()
+        {
+            foreach(var go in SpawnedEntities)
+            {
+                go.GetComponent<IEntity>().Unhighlight();
+            }
         }
 
         void DetermineAction(IEntity entity, InteractionState currentInteraction, InputAction action)

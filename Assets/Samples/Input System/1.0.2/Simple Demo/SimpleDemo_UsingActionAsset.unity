@@ -183,6 +183,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 437303fa1f167594ea4161b1220ceb97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CubeAddress: Assets/InContextLevelEditor/Prefabs/SpawnableObjects/EntityCube.prefab
+  CylinderAddress: Assets/InContextLevelEditor/Prefabs/SpawnableObjects/EntityCylinder.prefab
+  SphereAddress: Assets/InContextLevelEditor/Prefabs/SpawnableObjects/EntitySphere.prefab
 --- !u!1 &1369667891
 GameObject:
   m_ObjectHideFlags: 0
@@ -379,9 +382,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edf30be422659694999895aa8d59b71d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultEntityAddress: 
+  defaultEntityAddress: Assets/InContextLevelEditor/Prefabs/SpawnableObjects/EntityCube.prefab
   entityAddresses:
   - Assets/InContextLevelEditor/Prefabs/SpawnableObjects/EntityCube.prefab
+  mainWindowUIController: {fileID: 571861846}
 --- !u!4 &1557274073
 Transform:
   m_ObjectHideFlags: 0
