@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace InContextLevelEditor.LevelEditor
 {
-    interface IShape
+    interface IShapeEntity : IEntity
     {
         Mesh Mesh {get;}
         Color Color {get;}

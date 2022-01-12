@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace InContextLevelEditor.LevelEditor
 {
-    interface ILight
+    interface ILightEntity : IEntity
     {
         float Intensity {get;}
         Light Light {get;}

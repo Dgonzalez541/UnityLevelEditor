@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,9 +7,17 @@ using UnityEngine.InputSystem.Interactions;
 using InContextLevelEditor.Input;
 using InContextLevelEditor.LevelEditor;
 using UnityEngine.EventSystems;
+using InContextLevelEditor.Strategy;
 
 namespace InContextLevelEditor.Player
 {
+    enum InteractionState
+    {
+        Translate,
+        Rotate
+    }
+
+    [RequireComponent(typeof(EntitySpawner))]
     public class Player : MonoBehaviour
     {
         public float moveSpeed;
@@ -17,7 +26,7 @@ namespace InContextLevelEditor.Player
         private AA_FlyingCamera m_Controls;
         private Vector2 m_Rotation;
 
-        [SerializeField] ShapeGenerator shapeGenerator;
+        [SerializeField] EntitySpawner entitySpawner;
 
         Camera mainCamera;
 
@@ -25,13 +34,25 @@ namespace InContextLevelEditor.Player
         private PointerEventData m_PointerData;
         private List<RaycastResult> m_RaycastResults = new List<RaycastResult>();
 
+        public IEntity SelectedEntity {get; private set;}
+
+        InteractionState CurrentInteraction;
+
+        [SerializeField] GameObject testingEntity;
+
         public void Awake()
         {
             m_Controls = new AA_FlyingCamera();
-
             m_Controls.Player.Fire.performed += Fire;
 
             mainCamera = GetComponent<Camera>();
+
+            IEntity entity = testingEntity.GetComponent<IEntity>();
+            entitySpawner = GetComponent<EntitySpawner>();
+            entitySpawner.SetEntityToPlace(entity);
+
+            CurrentInteraction = InteractionState.Translate;
+            SelectedEntity = entity;
         }
 
         private void Fire(InputAction.CallbackContext obj)
@@ -40,17 +61,100 @@ namespace InContextLevelEditor.Player
             return;
 
             var device = playerInput.GetDevice<Pointer>();
-            Debug.Log("Fire performed");
-            Debug.Log($"Device: {device}");
-            Debug.Log($"IsRayCastHittingUIObject: {IsRaycastHittingUIObject(device.position.ReadValue())}");
-            
-            if (device != null && IsRaycastHittingUIObject(device.position.ReadValue()))
+
+            if (device == null)
+            return;
+        
+            Vector2 position = device.position.ReadValue();
+            if (IsRaycastHittingUIObject(position))     
+            return;
+
+            IEntity entity = IsRaycastHittingEntity(position);
+            if(entity != null)
             {
-                Debug.Log($"Device: {device}");
-                
-                return;
+                Debug.Log($"Hit entity {entity.GameObject}");
+
+                if(entity != SelectedEntity)
+                {
+                    Debug.Log("Entity is not selected entity");
+                    SetEntity(entity.GameObject);
+                    EnableEntityInteractions(entity);
+                }
+                else //
+                {
+                    Debug.Log($"Hit selected entity");
+                    DetermineAction(entity, CurrentInteraction, obj.action);
+                }
             }
-           shapeGenerator.SpawnGameObjectAtMousePosition();
+            else//Not hitting enity, so spawn new entity
+            {
+                Debug.Log("Did not hit an entity, spawingin new one");
+                GameObject entityObject = entitySpawner.SpawnGameObjectAtMousePosition(testingEntity, position);
+                entity = entityObject.GetComponent<IEntity>();
+                SetEntity(entityObject);
+                EnableEntityInteractions(entity);
+            } 
+        }
+
+        void DetermineAction(IEntity entity, InteractionState currentInteraction, InputAction action)
+        {
+            if(currentInteraction == InteractionState.Translate)
+            {
+                Translate translate = new Translate(entity, action);
+                translate.Execute();
+            }
+
+            if(currentInteraction == InteractionState.Rotate)
+            {
+                //Rotate rotate = new Rotate()
+            }
+        }
+
+        void EnableEntityInteractions(IEntity entity)
+        {
+            //Enable Translate
+            //Enable Rotate
+            if(entity is IShapeEntity)
+            {
+                //Enable Color change
+            }
+
+            if(entity is IEntity)
+            {
+                //Enable Intensity change
+            }
+        }
+
+        void DisableEntityInteractions(IEntity entity)
+        {
+            //Disable Translate
+            //Disable Rotate
+
+            if(entity is IShapeEntity)
+            {
+                //Enable Color change
+            }
+
+            if(entity is IEntity)
+            {
+                //Enable Intensity change
+            }
+        }
+
+        public void SetEntity(GameObject newEntityGameObject)
+        {
+            SelectedEntity.Unhighlight();
+            DisableEntityInteractions(SelectedEntity);
+
+            SelectedEntity = newEntityGameObject.GetComponent<IEntity>();
+            SelectedEntity.Highlight();
+        }
+
+        public void DisableActions()
+        {
+            throw new NotImplementedException();
+            //Diable Color change
+            //Disable Intensity change;
         }
 
         private bool IsRaycastHittingUIObject(Vector2 position)
@@ -60,6 +164,18 @@ namespace InContextLevelEditor.Player
             m_PointerData.position = position;
             EventSystem.current.RaycastAll(m_PointerData, m_RaycastResults);
             return m_RaycastResults.Count > 0;
+        }
+
+        private IEntity IsRaycastHittingEntity(Vector2 mousePosition)
+        {
+            RaycastHit hit;
+            Ray ray = mainCamera.ScreenPointToRay(mousePosition);
+            if(Physics.Raycast(ray, out hit))
+            {
+                IEntity entity = hit.collider.gameObject.GetComponentInChildren<IEntity>();
+                return entity;       
+            }
+            return null;
         }
 
         public void OnEnable()
@@ -77,6 +193,7 @@ namespace InContextLevelEditor.Player
             var look = m_Controls.Player.Look.ReadValue<Vector2>();
             var move = m_Controls.Player.Move.ReadValue<Vector2>();
             var elevate = m_Controls.Player.Elevate.ReadValue<float>();
+            
             Look(look);
             Move(move);
             Elevate(elevate);
