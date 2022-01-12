@@ -129,8 +129,10 @@ namespace InContextLevelEditor.LevelEditor
 
         void DetermineAction(IEntity entity, InteractionState currentInteraction, InputAction action)
         {
+
             if(currentInteraction == InteractionState.Translate)
             {
+                Debug.Log("Translate");
                 Translate translate = new Translate(entity, action);
                 translate.Execute();
             }
