@@ -186,6 +186,7 @@ MonoBehaviour:
   CubeAddress: Assets/InContextLevelEditor/Prefabs/SpawnableObjects/EntityCube.prefab
   CylinderAddress: Assets/InContextLevelEditor/Prefabs/SpawnableObjects/EntityCylinder.prefab
   SphereAddress: Assets/InContextLevelEditor/Prefabs/SpawnableObjects/EntitySphere.prefab
+  SpotLightAddress: EntitySpotLight.prefabditor/Prefabs/SpawnableObjects/EntitySpotLight.prefab
 --- !u!1 &1369667891
 GameObject:
   m_ObjectHideFlags: 0

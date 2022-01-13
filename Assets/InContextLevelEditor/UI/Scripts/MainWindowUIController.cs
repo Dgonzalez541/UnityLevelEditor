@@ -23,15 +23,17 @@ namespace InContextLevelEditor.UI
         [SerializeField] string CubeAddress;
         [SerializeField] string CylinderAddress;
         [SerializeField] string SphereAddress;
+        [SerializeField] string SpotLightAddress;
 
-        public Button CubeButton {get; private set;}
-        public Button CylinderButton {get; private set;}
-        public Button SphereButton {get; private set;}
+        Button CubeButton;
+        Button CylinderButton;
+        Button SphereButton;
+        Button SpotlightButton;
 
-        public Toggle TranslateToggle {get; private set;}
-        public Toggle RotateToggle {get; private set;}
-        public Toggle PaintToggle {get; private set;}
-        public Toggle IntensityToggle {get; private set;}
+        Toggle TranslateToggle;
+        Toggle RotateToggle;
+        Toggle PaintToggle;
+        Toggle IntensityToggle;
         HashSet<Toggle> ToggleGroup = new HashSet<Toggle>();
 
         public event EventHandler<EntitySelectionEventArgs> OnButtonPressHandler;
@@ -43,10 +45,12 @@ namespace InContextLevelEditor.UI
             CubeButton = root.Q<Button>("CubeButton");
             CylinderButton = root.Q<Button>("CylinderButton");
             SphereButton = root.Q<Button>("SphereButton");
+            SpotlightButton = root.Q<Button>("SpotLightButton");
 
             CubeButton.clicked += (() => OnEntitySelectButtonPressed(CubeAddress));
             CylinderButton.clicked += (() => OnEntitySelectButtonPressed(CylinderAddress));
             SphereButton.clicked += (() => OnEntitySelectButtonPressed(SphereAddress));
+            SpotlightButton.clicked += (() => OnEntitySelectButtonPressed(SpotLightAddress));
 
             TranslateToggle = root.Q<Toggle>("TranslateInteractionToggle");
             RotateToggle = root.Q<Toggle>("RotateInteractionToggle");
@@ -73,6 +77,7 @@ namespace InContextLevelEditor.UI
             CubeButton.clicked -= (() => OnEntitySelectButtonPressed(CubeAddress));
             CylinderButton.clicked -= (() => OnEntitySelectButtonPressed(CylinderAddress));
             SphereButton.clicked -= (() => OnEntitySelectButtonPressed(SphereAddress));
+            SpotlightButton.clicked -= (() => OnEntitySelectButtonPressed(SpotLightAddress));
 
             TranslateToggle.UnregisterValueChangedCallback(x => OnInteractionSelectButtonPress(InteractionState.Translate, TranslateToggle));
             RotateToggle.UnregisterValueChangedCallback(x => OnInteractionSelectButtonPress(InteractionState.Rotate, RotateToggle));

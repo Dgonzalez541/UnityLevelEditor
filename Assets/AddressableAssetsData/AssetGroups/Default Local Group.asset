@@ -21,8 +21,8 @@ MonoBehaviour:
     m_Address: Assets/InContextLevelEditor/Prefabs/SpawnableObjects/EntityCube.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
-    m_MainAsset: {fileID: 7172365606837459041, guid: 4aa7140250de05842bf02abdbc4cb8d8, type: 3}
-    m_TargetAsset: {fileID: 7172365606837459041, guid: 4aa7140250de05842bf02abdbc4cb8d8, type: 3}
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
   - m_GUID: dff44a75637a72040ab554e094952f6e
     m_Address: Assets/InContextLevelEditor/Prefabs/SpawnableObjects/EntityCylinder.prefab
     m_ReadOnly: 0
@@ -33,8 +33,14 @@ MonoBehaviour:
     m_Address: Assets/InContextLevelEditor/Prefabs/SpawnableObjects/EntitySphere.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
-    m_MainAsset: {fileID: 7172365606837459041, guid: ce048f41ab36b414282aaeb69fd453b7, type: 3}
-    m_TargetAsset: {fileID: 7172365606837459041, guid: ce048f41ab36b414282aaeb69fd453b7, type: 3}
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 51e7dce466e5656418e8cfec481bfcfc
+    m_Address: EntitySpotLight.prefabditor/Prefabs/SpawnableObjects/EntitySpotLight.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 7172365606837459041, guid: 51e7dce466e5656418e8cfec481bfcfc, type: 3}
+    m_TargetAsset: {fileID: 7172365606837459041, guid: 51e7dce466e5656418e8cfec481bfcfc, type: 3}
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: b33481b04406dea40a675c06fcf9aae0, type: 2}
   m_SchemaSet:

@@ -8,9 +8,10 @@
             <ui:Toggle label=" " name="IntensityInteractionToggle" class="InteractionToggleStyle" style="background-image: url(&apos;/Assets/InContextLevelEditor/Textures/LightIcon.png#LightIcon&apos;);" />
         </ui:VisualElement>
         <ui:VisualElement name="ObjectSelectionPane" picking-mode="Ignore" style="position: absolute; flex-direction: row; flex-grow: 0; right: auto; justify-content: center; align-items: flex-start; bottom: 10px;">
-            <ui:Button display-tooltip-when-elided="true" name="CylinderButton" class="ShapeSelectorButtonStyle ShapeSelectButtonStyle" style="background-image: url(&apos;/Assets/InContextLevelEditor/Textures/GrayCylinder.png&apos;); -unity-slice-left: 4; -unity-slice-top: 4; -unity-slice-right: 4; -unity-slice-bottom: 4;" />
-            <ui:Button display-tooltip-when-elided="true" name="SphereButton" class="ShapeSelectorButtonStyle ShapeSelectButtonStyle" style="background-image: url(&apos;/Assets/InContextLevelEditor/Textures/GraySphere.png&apos;);" />
-            <ui:Button display-tooltip-when-elided="true" name="CubeButton" class="ShapeSelectorButtonStyle ShapeSelectButtonStyle" style="background-image: url(&apos;/Assets/InContextLevelEditor/Textures/GrayCube.png&apos;); -unity-slice-bottom: 6;" />
+            <ui:Button display-tooltip-when-elided="true" name="CylinderButton" class="ShapeSelectorButtonStyle ShapeSelectButtonStyle" style="background-image: url(&apos;/Assets/InContextLevelEditor/Textures/GrayCylinder.png#GrayCylinder&apos;); -unity-slice-left: 4; -unity-slice-top: 4; -unity-slice-right: 4; -unity-slice-bottom: 4;" />
+            <ui:Button display-tooltip-when-elided="true" name="SphereButton" class="ShapeSelectorButtonStyle ShapeSelectButtonStyle" style="background-image: url(&apos;/Assets/InContextLevelEditor/Textures/GraySphere.png#GraySphere&apos;);" />
+            <ui:Button display-tooltip-when-elided="true" name="CubeButton" class="ShapeSelectorButtonStyle ShapeSelectButtonStyle" style="background-image: url(&apos;/Assets/InContextLevelEditor/Textures/GrayCube.png#GrayCube&apos;); -unity-slice-bottom: 6;" />
+            <ui:Button display-tooltip-when-elided="true" name="SpotLightButton" class="ShapeSelectButtonStyle" style="background-image: url(&apos;/Assets/InContextLevelEditor/Textures/LightIcon.png&apos;); -unity-slice-left: 8; -unity-slice-top: 8; -unity-slice-right: 8; -unity-slice-bottom: 8;" />
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>
