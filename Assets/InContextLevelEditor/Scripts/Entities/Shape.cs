@@ -33,9 +33,6 @@ namespace InContextLevelEditor.LevelEditor
             //     rend = gameObject.AddComponent<MeshRenderer>();
             coloredMat.color = color;
 
-            Debug.Log($"Renderer: {GetComponent<Renderer>()}");
-            Debug.Log($"material: {GetComponent<Renderer>().material}");
-
             GetComponent<Renderer>().material = coloredMat;
            
         }
