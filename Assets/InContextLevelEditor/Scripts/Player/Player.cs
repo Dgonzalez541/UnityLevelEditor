@@ -16,7 +16,7 @@ namespace InContextLevelEditor.Player
         public float moveSpeed;
         public float rotateSpeed;
 
-        private AA_FlyingCamera m_Controls;
+        private AA_Player m_Controls;
         private Vector2 m_Rotation;
 
         [SerializeField] PlayerInput playerInput; 
@@ -27,7 +27,7 @@ namespace InContextLevelEditor.Player
 
         public void Awake()
         {
-            m_Controls = new AA_FlyingCamera();
+            m_Controls = new AA_Player();
             m_Controls.Player.Fire.performed += Fire;
         }
 

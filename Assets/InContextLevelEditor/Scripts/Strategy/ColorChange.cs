@@ -17,7 +17,6 @@ namespace InContextLevelEditor.Strategy
 
         public override void Execute()
         {
-            Debug.Log("Executing color change");
             var shapeEntity = entity as IShapeEntity;
             shapeEntity.SetColor(color);
         }
