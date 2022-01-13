@@ -35,16 +35,17 @@ namespace InContextLevelEditor.UI
         [SerializeField] string SphereAddress;
         [SerializeField] string SpotLightAddress;
 
-        Button CubeButton;
-        Button CylinderButton;
-        Button SphereButton;
-        Button SpotlightButton;
+        Toggle CubeToggle;
+        Toggle CylinderToggle;
+        Toggle SphereToggle;
+        Toggle SpotlightToggle;
+        HashSet<Toggle> EntityToggleGroup = new HashSet<Toggle>();
 
         Toggle TranslateToggle;
         Toggle RotateToggle;
         Toggle PaintToggle;
         Toggle IntensityToggle;
-        HashSet<Toggle> ToggleGroup = new HashSet<Toggle>();
+        HashSet<Toggle> ActionToggleGroup = new HashSet<Toggle>();
 
         Slider IntensitySlider;
 
@@ -63,30 +64,35 @@ namespace InContextLevelEditor.UI
         void Start()
         {
             var root = GetComponent<UIDocument>().rootVisualElement;
-            CubeButton = root.Q<Button>("CubeButton");
-            CylinderButton = root.Q<Button>("CylinderButton");
-            SphereButton = root.Q<Button>("SphereButton");
-            SpotlightButton = root.Q<Button>("SpotLightButton");
+            CubeToggle = root.Q<Toggle>("CubeToggle");
+            CylinderToggle = root.Q<Toggle>("CylinderToggle");
+            SphereToggle = root.Q<Toggle>("SphereToggle");
+            SpotlightToggle = root.Q<Toggle>("SpotLightToggle");
 
-            CubeButton.clicked += (() => OnEntitySelectButtonPressed(CubeAddress));
-            CylinderButton.clicked += (() => OnEntitySelectButtonPressed(CylinderAddress));
-            SphereButton.clicked += (() => OnEntitySelectButtonPressed(SphereAddress));
-            SpotlightButton.clicked += (() => OnEntitySelectButtonPressed(SpotLightAddress));
+            EntityToggleGroup.Add(CubeToggle);
+            EntityToggleGroup.Add(CylinderToggle);
+            EntityToggleGroup.Add(SphereToggle);
+            EntityToggleGroup.Add(SpotlightToggle);
+
+
+            CubeToggle.RegisterValueChangedCallback(x => OnEntitySelectButtonPressed(CubeAddress, CubeToggle));
+            CylinderToggle.RegisterValueChangedCallback(x => OnEntitySelectButtonPressed(CylinderAddress, CylinderToggle));
+            SphereToggle.RegisterValueChangedCallback(x => OnEntitySelectButtonPressed(SphereAddress, SphereToggle));
+            SpotlightToggle.RegisterValueChangedCallback(x => OnEntitySelectButtonPressed(SpotLightAddress, SpotlightToggle));
 
             TranslateToggle = root.Q<Toggle>("TranslateInteractionToggle");
             RotateToggle = root.Q<Toggle>("RotateInteractionToggle");
             PaintToggle = root.Q<Toggle>("PaintInteractionToggle");
             IntensityToggle = root.Q<Toggle>("IntensityInteractionToggle");
 
-            ToggleGroup.Add(TranslateToggle);
-            ToggleGroup.Add(RotateToggle);
-            ToggleGroup.Add(PaintToggle);
-            ToggleGroup.Add(IntensityToggle);
+            ActionToggleGroup.Add(TranslateToggle);
+            ActionToggleGroup.Add(RotateToggle);
+            ActionToggleGroup.Add(PaintToggle);
+            ActionToggleGroup.Add(IntensityToggle);
 
-            TranslateToggle.RegisterValueChangedCallback(x => {
-                OnInteractionSelectButtonPress(InteractionState.Translate, TranslateToggle);
-                });
+            TranslateToggle.RegisterValueChangedCallback(x => OnInteractionSelectButtonPress(InteractionState.Translate, TranslateToggle));
             RotateToggle.RegisterValueChangedCallback(x => OnInteractionSelectButtonPress(InteractionState.Rotate, RotateToggle));
+            
             PaintToggle.RegisterValueChangedCallback(x => {
                 OnInteractionSelectButtonPress(InteractionState.Paint, PaintToggle);
                 RGBSliderPane.SetEnabled(PaintToggle.value);
@@ -108,6 +114,7 @@ namespace InContextLevelEditor.UI
             GreenSlider.RegisterValueChangedCallback(x => OnRGBColorChange());
             BlueSlider.RegisterValueChangedCallback(x => OnRGBColorChange());
 
+            CubeToggle.value = true;
             TranslateToggle.value = true;
             IntensityToggle.SetEnabled(false);
 
@@ -122,10 +129,10 @@ namespace InContextLevelEditor.UI
 
         void OnDestroy()
         {
-            CubeButton.clicked -= (() => OnEntitySelectButtonPressed(CubeAddress));
-            CylinderButton.clicked -= (() => OnEntitySelectButtonPressed(CylinderAddress));
-            SphereButton.clicked -= (() => OnEntitySelectButtonPressed(SphereAddress));
-            SpotlightButton.clicked -= (() => OnEntitySelectButtonPressed(SpotLightAddress));
+            CubeToggle.UnregisterValueChangedCallback(x => OnEntitySelectButtonPressed(CubeAddress, CubeToggle));
+            CylinderToggle.UnregisterValueChangedCallback(x => OnEntitySelectButtonPressed(CylinderAddress, CylinderToggle));
+            SphereToggle.UnregisterValueChangedCallback(x => OnEntitySelectButtonPressed(SphereAddress, SphereToggle));
+            SpotlightToggle.UnregisterValueChangedCallback(x => OnEntitySelectButtonPressed(SpotLightAddress, SpotlightToggle));
 
             TranslateToggle.UnregisterValueChangedCallback(x => OnInteractionSelectButtonPress(InteractionState.Translate, TranslateToggle));
             RotateToggle.UnregisterValueChangedCallback(x => OnInteractionSelectButtonPress(InteractionState.Rotate, RotateToggle));
@@ -141,7 +148,6 @@ namespace InContextLevelEditor.UI
 
         void OnInteractionStateChange(object sender, InteractionStateEventArgs e)
         {
-            Debug.Log($"Oninteraction change {e.Interaction}");
             SetEnableInteraction(e.Interaction, e.Enabled);
         }
 
@@ -165,20 +171,24 @@ namespace InContextLevelEditor.UI
             }
         }
 
-        void OnEntitySelectButtonPressed(string assetAddress)
+        void OnEntitySelectButtonPressed(string assetAddress, Toggle activeToggle)
         {
-            EntitySelectionEventArgs args = new EntitySelectionEventArgs();
-            args.AssetAddress = assetAddress;
-            var handler = OnButtonPressHandler;
-            if(handler != null)
-                handler(this, args);
+            if(activeToggle.value)
+            {
+                SetTogglesFlase(activeToggle, EntityToggleGroup);
+                EntitySelectionEventArgs args = new EntitySelectionEventArgs();
+                args.AssetAddress = assetAddress;
+                var handler = OnButtonPressHandler;
+                if(handler != null)
+                    handler(this, args);
+            }
         }
 
         void OnInteractionSelectButtonPress(InteractionState interactionState, Toggle activeToggle)
         {
             if(activeToggle.value)
             {
-                SetTogglesFlase(activeToggle);
+                SetTogglesFlase(activeToggle, ActionToggleGroup);
                 InteractionSelectionEventArgs args = new InteractionSelectionEventArgs();
                 args.Interaction = interactionState;
                 var handler = this.OnInteractionButtonPressHandler;
@@ -187,9 +197,9 @@ namespace InContextLevelEditor.UI
             }
         }
 
-        void SetTogglesFlase(Toggle activeToggle)
+        void SetTogglesFlase(Toggle activeToggle, HashSet<Toggle> toggleGroup)
         {
-            foreach(Toggle toggle in ToggleGroup)
+            foreach(Toggle toggle in toggleGroup)
             {
                 if(toggle != activeToggle)
                     toggle.value = false;

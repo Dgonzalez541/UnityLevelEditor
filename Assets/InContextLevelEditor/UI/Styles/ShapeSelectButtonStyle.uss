@@ -160,7 +160,7 @@
     -unity-slice-top: 3;
     -unity-slice-right: 3;
     -unity-slice-bottom: 3;
-    -unity-background-image-tint-color: rgba(221, 72, 0, 255);
+    -unity-background-image-tint-color: rgb(221, 72, 0);
 }
 
 .InteractionToggleStyle:disabled {
@@ -184,4 +184,28 @@
     -unity-slice-top: 3;
     -unity-slice-right: 3;
     -unity-slice-bottom: 3;
+}
+
+.ShapeSelectButtonStyle:checked {
+    background-color: rgb(242, 243, 0);
+    width: 70px;
+    height: 70px;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+    justify-content: flex-end;
+    align-items: center;
+    margin-left: 6px;
+    margin-right: 6px;
+    margin-top: 6px;
+    margin-bottom: 6px;
+    border-left-width: 4px;
+    border-right-width: 4px;
+    border-top-width: 4px;
+    border-bottom-width: 4px;
+    border-left-color: rgb(0, 0, 0);
+    border-right-color: rgb(0, 0, 0);
+    border-top-color: rgb(0, 0, 0);
+    border-bottom-color: rgb(0, 0, 0);
 }
