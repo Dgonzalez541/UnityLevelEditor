@@ -17,7 +17,7 @@ namespace InContextLevelEditor.LevelEditor
 
         [SerializeField] Material highlightMat;
         [SerializeField] Material unhighlightMat;
-        Material coloredMat;
+        [SerializeField] Material coloredMat;
 
         void Awake()
         {
@@ -31,6 +31,12 @@ namespace InContextLevelEditor.LevelEditor
             // if(rend == null)
             //     rend = gameObject.AddComponent<MeshRenderer>();
             coloredMat.color = color;
+
+            Debug.Log($"Renderer: {GetComponent<Renderer>()}");
+            Debug.Log($"material: {GetComponent<Renderer>().material}");
+
+            GetComponent<Renderer>().material = coloredMat;
+            
         }
 
         public void SetMesh(Mesh mesh)

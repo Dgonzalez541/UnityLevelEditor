@@ -49,9 +49,17 @@ namespace InContextLevelEditor.LevelEditor
 
             mainWindowUIController.OnButtonPressHandler += OnEntitySelect;
             mainWindowUIController.OnInteractionButtonPressHandler += OnInteractionSelect;
+            mainWindowUIController.OnIntensitySliderChangeHandler += OnIntensityChange;
+            mainWindowUIController.OnRGBColorChangeHandler += OnRGBColorChange;
 
-            CurrentInteraction = InteractionState.Translate;
-            
+            CurrentInteraction = InteractionState.Translate;            
+        }
+
+        
+
+        void OnDestroy()
+        {
+
         }
 
         private void OnInteractionSelect(object sender, InteractionSelectionEventArgs e)
@@ -148,7 +156,6 @@ namespace InContextLevelEditor.LevelEditor
 
         void DetermineAction(IEntity entity, InteractionState currentInteraction, InputAction action)
         {
-
             if(currentInteraction == InteractionState.Translate)
             {
                 Translate translate = new Translate(entity, action);
@@ -160,23 +167,17 @@ namespace InContextLevelEditor.LevelEditor
                 Rotate rotate = new Rotate(entity, action);
                 rotate.Execute();
             }
-
-            if(currentInteraction == InteractionState.Paint)
-            {
-
-            }
         }
 
         void SetEntityInteractions(IEntity entity, bool enabled)
         {
-            EventHandler<InteractionStateEventArgs> handler = OnInteractionStateChagneHandler;
 
             if(entity is IShapeEntity)
             {
                 InteractionStateEventArgs args = new InteractionStateEventArgs();
                 args.Interaction = InteractionState.Paint;
                 args.Enabled = enabled;
-
+                var handler = OnInteractionStateChagneHandler;
                 if(handler != null)
                     OnInteractionStateChagneHandler(this, args);
             }
@@ -186,15 +187,30 @@ namespace InContextLevelEditor.LevelEditor
                 InteractionStateEventArgs args = new InteractionStateEventArgs();
                 args.Interaction = InteractionState.Intensity;
                 args.Enabled = enabled;
-
+                var handler = OnInteractionStateChagneHandler;
                 if(handler != null)
                     OnInteractionStateChagneHandler(this, args);
             }
         }
 
-        void InvokeEvent(EventHandler handler)
+        private void OnIntensityChange(object sender, IntensitySliderChangeEventArgs e)
         {
+            if(SelectedEntity is ILightEntity)
+            {
+                var lightEntity = SelectedEntity as ILightEntity;
+                Intensity intensity = new Intensity(lightEntity, e.Intensity);
+                intensity.Execute();
+            }
+        }
 
+        private void OnRGBColorChange(object sender, RGBChangeEventArgs e)
+        {
+            if(SelectedEntity is IShapeEntity)
+            {
+                var shapeEntity = SelectedEntity as IShapeEntity;
+                ColorChange colorChange = new ColorChange(shapeEntity, e.Color);
+                colorChange.Execute();
+            }
         }
     }
 

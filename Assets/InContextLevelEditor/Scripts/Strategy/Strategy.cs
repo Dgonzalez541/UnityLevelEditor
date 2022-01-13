@@ -2,7 +2,7 @@ using InContextLevelEditor.LevelEditor;
 
 namespace InContextLevelEditor.Strategy
 {
-    abstract class Strategy 
+    public abstract class Strategy 
     {
         protected IEntity entity;
 

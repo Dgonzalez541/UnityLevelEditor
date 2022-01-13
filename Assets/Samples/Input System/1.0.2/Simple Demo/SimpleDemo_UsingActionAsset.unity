@@ -187,6 +187,7 @@ MonoBehaviour:
   CylinderAddress: Assets/InContextLevelEditor/Prefabs/SpawnableObjects/EntityCylinder.prefab
   SphereAddress: Assets/InContextLevelEditor/Prefabs/SpawnableObjects/EntitySphere.prefab
   SpotLightAddress: EntitySpotLight.prefabditor/Prefabs/SpawnableObjects/EntitySpotLight.prefab
+  mainController: {fileID: 1557274072}
 --- !u!1 &1369667891
 GameObject:
   m_ObjectHideFlags: 0
@@ -500,6 +501,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 25a9fb42d361f46ad89221f6d301e96e, type: 2}
+    - target: {fileID: 3649407600846942370, guid: b6b5f266028754740b00996b1ad8ce4e, type: 3}
+      propertyPath: m_Intensity
+      value: 0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 3649407601005238484, guid: b6b5f266028754740b00996b1ad8ce4e, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -548,35 +553,35 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2130936417378178916, guid: be13076fc435feb41b6b5e5d64e3b6f1, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 2.8
       objectReference: {fileID: 0}
     - target: {fileID: 2130936417378178916, guid: be13076fc435feb41b6b5e5d64e3b6f1, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1
+      value: 6.55
       objectReference: {fileID: 0}
     - target: {fileID: 2130936417378178916, guid: be13076fc435feb41b6b5e5d64e3b6f1, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -10
+      value: -8.99
       objectReference: {fileID: 0}
     - target: {fileID: 2130936417378178916, guid: be13076fc435feb41b6b5e5d64e3b6f1, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.95068884
       objectReference: {fileID: 0}
     - target: {fileID: 2130936417378178916, guid: be13076fc435feb41b6b5e5d64e3b6f1, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: 0.3101464
       objectReference: {fileID: 0}
     - target: {fileID: 2130936417378178916, guid: be13076fc435feb41b6b5e5d64e3b6f1, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 2130936417378178916, guid: be13076fc435feb41b6b5e5d64e3b6f1, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 2130936417378178916, guid: be13076fc435feb41b6b5e5d64e3b6f1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
+      value: 36.136
       objectReference: {fileID: 0}
     - target: {fileID: 2130936417378178916, guid: be13076fc435feb41b6b5e5d64e3b6f1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
@@ -627,7 +632,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6831dc4fc07b6cd449afe54dd0360320, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 100
+  moveSpeed: 50
   rotateSpeed: 50
   playerInput: {fileID: 1369667895}
   editorController: {fileID: 1557274072}

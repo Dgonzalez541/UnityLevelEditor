@@ -17,6 +17,16 @@ namespace InContextLevelEditor.UI
         public InteractionState Interaction {get; set;}
     }
 
+    public class IntensitySliderChangeEventArgs : EventArgs
+    {
+        public float Intensity {get; set;}
+    }
+
+    public class RGBChangeEventArgs : EventArgs
+    {
+        public Color Color {get; set;}
+    }
+
     [RequireComponent(typeof(UIDocument))]
     public class MainWindowUIController : MonoBehaviour
     {
@@ -36,9 +46,20 @@ namespace InContextLevelEditor.UI
         Toggle IntensityToggle;
         HashSet<Toggle> ToggleGroup = new HashSet<Toggle>();
 
+        Slider IntensitySlider;
+
+        VisualElement RGBSliderPane;
+        Slider RedSlider;
+        Slider GreenSlider;
+        Slider BlueSlider;
+
         public event EventHandler<EntitySelectionEventArgs> OnButtonPressHandler;
         public event EventHandler<InteractionSelectionEventArgs> OnInteractionButtonPressHandler;
+        public event EventHandler<IntensitySliderChangeEventArgs> OnIntensitySliderChangeHandler;
+        public event EventHandler<RGBChangeEventArgs> OnRGBColorChangeHandler;
 
+        [SerializeField] LevelEditorController mainController;
+        
         void Start()
         {
             var root = GetComponent<UIDocument>().rootVisualElement;
@@ -57,19 +78,46 @@ namespace InContextLevelEditor.UI
             PaintToggle = root.Q<Toggle>("PaintInteractionToggle");
             IntensityToggle = root.Q<Toggle>("IntensityInteractionToggle");
 
-            TranslateToggle.value = true;
-            PaintToggle.SetEnabled(false);
-            IntensityToggle.SetEnabled(false);
-
             ToggleGroup.Add(TranslateToggle);
             ToggleGroup.Add(RotateToggle);
             ToggleGroup.Add(PaintToggle);
             ToggleGroup.Add(IntensityToggle);
 
-            TranslateToggle.RegisterValueChangedCallback(x => OnInteractionSelectButtonPress(InteractionState.Translate, TranslateToggle));
+            TranslateToggle.RegisterValueChangedCallback(x => {
+                OnInteractionSelectButtonPress(InteractionState.Translate, TranslateToggle);
+                });
             RotateToggle.RegisterValueChangedCallback(x => OnInteractionSelectButtonPress(InteractionState.Rotate, RotateToggle));
-            PaintToggle.RegisterValueChangedCallback(x => OnInteractionSelectButtonPress(InteractionState.Paint, PaintToggle));
-            IntensityToggle.RegisterValueChangedCallback(x => OnInteractionSelectButtonPress(InteractionState.Intensity, IntensityToggle));
+            PaintToggle.RegisterValueChangedCallback(x => {
+                OnInteractionSelectButtonPress(InteractionState.Paint, PaintToggle);
+                RGBSliderPane.SetEnabled(PaintToggle.value);
+                });
+            IntensityToggle.RegisterValueChangedCallback(x => {
+                OnInteractionSelectButtonPress(InteractionState.Intensity, IntensityToggle);
+                IntensitySlider.SetEnabled(IntensityToggle.value);
+                });
+        
+            IntensitySlider = root.Q<Slider>("IntensitySlider");
+            IntensitySlider.RegisterValueChangedCallback(x => OnIntensitySliderChange(IntensitySlider));
+        
+            RGBSliderPane = root.Q<VisualElement>("RGBPane");
+            RedSlider = root.Q<Slider>("RedSlider");
+            GreenSlider = root.Q<Slider>("GreenSlider");
+            BlueSlider = root.Q<Slider>("BlueSlider");
+
+            RedSlider.RegisterValueChangedCallback(x => OnRGBColorChange());
+            GreenSlider.RegisterValueChangedCallback(x => OnRGBColorChange());
+            BlueSlider.RegisterValueChangedCallback(x => OnRGBColorChange());
+
+            TranslateToggle.value = true;
+            IntensityToggle.SetEnabled(false);
+
+            IntensitySlider.visible = false;
+            IntensitySlider.SetEnabled(false);
+
+            RGBSliderPane.visible = false;
+            RGBSliderPane.SetEnabled(false);
+
+            mainController.OnInteractionStateChagneHandler += OnInteractionStateChange;
         }
 
         void OnDestroy()
@@ -83,23 +131,47 @@ namespace InContextLevelEditor.UI
             RotateToggle.UnregisterValueChangedCallback(x => OnInteractionSelectButtonPress(InteractionState.Rotate, RotateToggle));
             PaintToggle.UnregisterValueChangedCallback(x => OnInteractionSelectButtonPress(InteractionState.Paint, PaintToggle));
             IntensityToggle.UnregisterValueChangedCallback(x => OnInteractionSelectButtonPress(InteractionState.Intensity, IntensityToggle));
+        
+            RedSlider.UnregisterValueChangedCallback(x => OnRGBColorChange());
+            GreenSlider.UnregisterValueChangedCallback(x => OnRGBColorChange());
+            BlueSlider.UnregisterValueChangedCallback(x => OnRGBColorChange());
+        
+            mainController.OnInteractionStateChagneHandler -= OnInteractionStateChange;
         }
 
-        public void SetEnableToggle(InteractionState interactionState, bool enabled)
+        void OnInteractionStateChange(object sender, InteractionStateEventArgs e)
         {
+            Debug.Log($"Oninteraction change {e.Interaction}");
+            SetEnableInteraction(e.Interaction, e.Enabled);
+        }
+
+        void SetEnableInteraction(InteractionState interactionState, bool enabled)
+        {
+            RGBSliderPane.SetEnabled(false);
+            IntensitySlider.SetEnabled(false);
+
             if(interactionState == InteractionState.Paint)
+            {
                 PaintToggle.SetEnabled(enabled);
+                RGBSliderPane.visible = enabled;
+                RGBSliderPane.SetEnabled(PaintToggle.value);
+            }
+
             if(interactionState == InteractionState.Intensity)
+            {
                 IntensityToggle.SetEnabled(enabled);
+                IntensitySlider.visible = enabled;
+                IntensitySlider.SetEnabled(IntensityToggle.value);
+            }
         }
 
         void OnEntitySelectButtonPressed(string assetAddress)
         {
             EntitySelectionEventArgs args = new EntitySelectionEventArgs();
             args.AssetAddress = assetAddress;
-            var handler = this.OnButtonPressHandler;
+            var handler = OnButtonPressHandler;
             if(handler != null)
-                OnButtonPressHandler(this, args);
+                handler(this, args);
         }
 
         void OnInteractionSelectButtonPress(InteractionState interactionState, Toggle activeToggle)
@@ -111,7 +183,7 @@ namespace InContextLevelEditor.UI
                 args.Interaction = interactionState;
                 var handler = this.OnInteractionButtonPressHandler;
                 if(handler != null)
-                    OnInteractionButtonPressHandler(this, args);
+                    handler(this, args);
             }
         }
 
@@ -122,6 +194,29 @@ namespace InContextLevelEditor.UI
                 if(toggle != activeToggle)
                     toggle.value = false;
             }
+        }
+
+        void OnIntensitySliderChange(Slider slider)
+        {
+            IntensitySliderChangeEventArgs args = new IntensitySliderChangeEventArgs();
+            args.Intensity = slider.value;
+            var handler = OnIntensitySliderChangeHandler;
+            if(handler != null)
+                handler(this, args);
+        }
+
+        void OnRGBColorChange()
+        {
+            RGBChangeEventArgs args = new RGBChangeEventArgs();
+
+            float r = Mathf.InverseLerp(0,255, RedSlider.value);
+            float g = Mathf.InverseLerp(0,255, GreenSlider.value);
+            float b = Mathf.InverseLerp(0,255, BlueSlider.value);
+            args.Color = new Color(r,g,b,255);
+
+            var handler = OnRGBColorChangeHandler;
+            if(handler != null)
+                handler(this, args);
         }
     }
 }

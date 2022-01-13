@@ -28,7 +28,6 @@ namespace InContextLevelEditor.Strategy
             float initialDistance = Vector3.Distance(entity.GameObject.transform.position, Camera.main.transform.position);
             while(inputAction.ReadValue<float>() != 0)
             {
-                Debug.Log($"DRAGTRANSLATE: {Mouse.current.position.ReadValue()}");
                 Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
                 entity.GameObject.transform.position = Vector3.SmoothDamp(entity.GameObject.transform.position, 
                                                                             ray.GetPoint(initialDistance), ref velocity, mouseDragSpeed);

@@ -11,7 +11,23 @@
             <ui:Button display-tooltip-when-elided="true" name="CylinderButton" class="ShapeSelectorButtonStyle ShapeSelectButtonStyle" style="background-image: url(&apos;/Assets/InContextLevelEditor/Textures/GrayCylinder.png#GrayCylinder&apos;); -unity-slice-left: 4; -unity-slice-top: 4; -unity-slice-right: 4; -unity-slice-bottom: 4;" />
             <ui:Button display-tooltip-when-elided="true" name="SphereButton" class="ShapeSelectorButtonStyle ShapeSelectButtonStyle" style="background-image: url(&apos;/Assets/InContextLevelEditor/Textures/GraySphere.png#GraySphere&apos;);" />
             <ui:Button display-tooltip-when-elided="true" name="CubeButton" class="ShapeSelectorButtonStyle ShapeSelectButtonStyle" style="background-image: url(&apos;/Assets/InContextLevelEditor/Textures/GrayCube.png#GrayCube&apos;); -unity-slice-bottom: 6;" />
-            <ui:Button display-tooltip-when-elided="true" name="SpotLightButton" class="ShapeSelectButtonStyle" style="background-image: url(&apos;/Assets/InContextLevelEditor/Textures/LightIcon.png&apos;); -unity-slice-left: 8; -unity-slice-top: 8; -unity-slice-right: 8; -unity-slice-bottom: 8;" />
+            <ui:Button display-tooltip-when-elided="true" name="SpotLightButton" class="ShapeSelectButtonStyle" style="background-image: url(&apos;/Assets/InContextLevelEditor/Textures/LightIcon.png#LightIcon&apos;); -unity-slice-left: 8; -unity-slice-top: 8; -unity-slice-right: 8; -unity-slice-bottom: 8;" />
+        </ui:VisualElement>
+        <ui:VisualElement name="SliderPane" style="position: absolute; left: 0; bottom: 0;">
+            <ui:VisualElement name="SliderPane" style="bottom: 0; left: 0; position: absolute;">
+                <ui:VisualElement name="IntensitySliderPane" tabindex="0" style="background-color: rgba(212, 27, 27, 0); left: 35px; position: absolute; bottom: 35px;">
+                    <ui:Slider picking-mode="Ignore" value="0" high-value="100" name="IntensitySlider" style="width: 250px; background-color: rgba(0, 0, 0, 0);" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="RGBPane" style="position: absolute; bottom: 0; left: 0; display: flex;">
+            <ui:VisualElement name="SliderPane" style="bottom: 0; left: 0; position: absolute;">
+                <ui:VisualElement name="IntensitySliderPane" tabindex="0" style="background-color: rgba(212, 27, 27, 0); left: 35px; position: absolute; bottom: 35px; padding-bottom: 0; padding-top: 0;">
+                    <ui:Slider picking-mode="Ignore" value="0" high-value="255" name="RedSlider" style="width: 250px; background-color: rgba(0, 0, 0, 0);" />
+                    <ui:Slider picking-mode="Ignore" value="0" high-value="255" name="GreenSlider" style="width: 250px; background-color: rgba(0, 0, 0, 0);" />
+                    <ui:Slider picking-mode="Ignore" value="0" high-value="255" name="BlueSlider" style="width: 250px; background-color: rgba(0, 0, 0, 0); padding-top: 0;" />
+                </ui:VisualElement>
+            </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>
