@@ -23,7 +23,7 @@ namespace InContextLevelEditor.Strategy
             mono.StartCoroutine(DragTranslate());
         }
 
-        private IEnumerator DragTranslate()
+        IEnumerator DragTranslate()
         {
             float initialDistance = Vector3.Distance(entity.GameObject.transform.position, Camera.main.transform.position);
             while(inputAction.ReadValue<float>() != 0)
