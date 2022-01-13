@@ -3,7 +3,7 @@ using UnityEngine;
 namespace InContextLevelEditor.LevelEditor
 {
     [RequireComponent(typeof(Light))]
-    public class SpotLight : MonoBehaviour, ILightEntity
+    public class SpotLightEntity : MonoBehaviour, ILightEntity
     {
         public float Intensity {get; private set;}
 
