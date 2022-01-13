@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using InContextLevelEditor.LevelEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -23,21 +22,6 @@ namespace InContextLevelEditor.Strategy
             MonoBehaviour mono = (MonoBehaviour) entity.GameObject.GetComponent<IEntity>();
             mono.StartCoroutine(DragTranslate());
         }
-
-        // public void TranslateEntity(Vector3 mousePos)
-        // {
-        //     Vector3 offset;
-        //     offset = entity.GameObject.transform.position - GetWorldMousePos(mousePos);
-        // }
-
-        // Vector3 GetWorldMousePos(Vector3 mousePositon)
-        // {
-        //     float ZCoord;
-        //     Vector3 mousePoint = mousePositon;
-        //     ZCoord = Camera.main.WorldToScreenPoint(entity.GameObject.transform.position).z;
-        //     mousePoint.z = ZCoord;
-        //     return Camera.main.ScreenToWorldPoint(mousePoint);
-        // }
 
         private IEnumerator DragTranslate()
         {

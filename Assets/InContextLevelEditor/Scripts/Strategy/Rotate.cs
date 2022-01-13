@@ -1,30 +1,48 @@
+using System.Collections;
 using InContextLevelEditor.LevelEditor;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace InContextLevelEditor.Strategy
 {
     class Rotate : Strategy
     {
-        Vector2 mousePosition;
+        InputAction inputAction;
+        Vector3 prevPos = Vector3.zero;
+        Vector3 posDelta = Vector3.zero;
 
-        Rotate(IEntity entity, Vector2 mousePosition) : base(entity)
+        public Rotate(IEntity entity, InputAction inputAction) : base(entity)
         {
             this.entity = entity;
-            this.mousePosition = mousePosition;
+            this.inputAction = inputAction;
         }
 
         public override void Execute()
         {
-            RotateEntity(mousePosition);
+            MonoBehaviour mono = (MonoBehaviour) entity.GameObject.GetComponent<IEntity>();
+            mono.StartCoroutine(RotateEntity());
         }
 
-        public void RotateEntity(Vector2 mousePosition)
+        public IEnumerator RotateEntity()
         {
-            Vector2 objectPosition = (Vector2) Camera.main.WorldToScreenPoint(entity.GameObject.transform.position);
-            Vector2 direction = (mousePosition - objectPosition).normalized;
-
-            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-            entity.GameObject.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+            while(inputAction.ReadValue<float>() != 0)
+            {
+                var worldPos = Mouse.current.position.ReadValue();
+                posDelta = (Vector3) Mouse.current.position.ReadValue() - prevPos;
+                Transform transform = entity.GameObject.transform;
+                if(Vector3.Dot(transform.up, Vector3.up) > 0)
+                {
+                    transform.Rotate(transform.up, -Vector3.Dot(posDelta, Camera.main.transform.right), Space.World);
+                }
+                else
+                {
+                    transform.Rotate(transform.up, Vector3.Dot(posDelta, Camera.main.transform.right), Space.World);
+                }
+                
+                transform.Rotate(Camera.main.transform.right, Vector3.Dot(posDelta, Camera.main.transform.up), Space.World);
+                prevPos = worldPos;
+                yield return null;
+            }
         }
     }
 }

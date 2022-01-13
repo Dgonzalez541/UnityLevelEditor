@@ -31,7 +31,7 @@ namespace InContextLevelEditor.LevelEditor
 
         void Awake()
         {
-            CurrentInteraction = InteractionState.Translate;
+            CurrentInteraction = InteractionState.Rotate;
             SpawnedEntities = new List<GameObject>();
 
             LoadAssets();
@@ -139,7 +139,8 @@ namespace InContextLevelEditor.LevelEditor
 
             if(currentInteraction == InteractionState.Rotate)
             {
-                //Rotate rotate = new Rotate()
+                Rotate rotate = new Rotate(entity, action);
+                rotate.Execute();
             }
         }
 
