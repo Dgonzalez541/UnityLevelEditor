@@ -1,27 +1,3 @@
-.ShapeSelectButtonStyle {
-    background-color: rgba(39, 130, 248, 255);
-    width: 70px;
-    height: 70px;
-    border-top-left-radius: 15px;
-    border-bottom-left-radius: 15px;
-    border-top-right-radius: 15px;
-    border-bottom-right-radius: 15px;
-    justify-content: flex-end;
-    align-items: center;
-    margin-left: 23px;
-    margin-right: 23px;
-    margin-top: 23px;
-    margin-bottom: 23px;
-    border-left-width: 4px;
-    border-right-width: 4px;
-    border-top-width: 4px;
-    border-bottom-width: 4px;
-    border-left-color: rgba(0, 0, 0, 255);
-    border-right-color: rgba(0, 0, 0, 255);
-    border-top-color: rgba(0, 0, 0, 255);
-    border-bottom-color: rgba(0, 0, 0, 255);
-}
-
 .ShapeSelectButtonStyle:hover {
     background-color: rgb(25, 76, 144);
     width: 70px;
@@ -32,10 +8,10 @@
     border-bottom-right-radius: 15px;
     justify-content: flex-end;
     align-items: center;
-    margin-left: 23px;
-    margin-right: 23px;
-    margin-top: 23px;
-    margin-bottom: 23px;
+    margin-left: 6px;
+    margin-right: 6px;
+    margin-top: 6px;
+    margin-bottom: 6px;
     border-left-width: 4px;
     border-right-width: 4px;
     border-top-width: 4px;
@@ -56,10 +32,10 @@
     border-bottom-right-radius: 15px;
     justify-content: flex-end;
     align-items: center;
-    margin-left: 23px;
-    margin-right: 23px;
-    margin-top: 23px;
-    margin-bottom: 23px;
+    margin-left: 6px;
+    margin-right: 6px;
+    margin-top: 6px;
+    margin-bottom: 6px;
     border-left-width: 4px;
     border-right-width: 4px;
     border-top-width: 4px;
@@ -68,4 +44,144 @@
     border-right-color: rgb(0, 0, 0);
     border-top-color: rgb(0, 0, 0);
     border-bottom-color: rgb(0, 0, 0);
+}
+
+.ShapeSelectButtonStyle {
+    background-color: rgb(39, 130, 248);
+    width: 70px;
+    height: 70px;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+    justify-content: flex-end;
+    align-items: center;
+    margin-left: 6px;
+    margin-right: 6px;
+    margin-top: 6px;
+    margin-bottom: 6px;
+    border-left-width: 4px;
+    border-right-width: 4px;
+    border-top-width: 4px;
+    border-bottom-width: 4px;
+    border-left-color: rgb(0, 0, 0);
+    border-right-color: rgb(0, 0, 0);
+    border-top-color: rgb(0, 0, 0);
+    border-bottom-color: rgb(0, 0, 0);
+}
+
+.InteractionToggleStyle {
+    margin-left: 11px;
+    margin-right: 11px;
+    margin-top: 11px;
+    margin-bottom: 11px;
+    width: 50px;
+    height: 50px;
+    background-color: rgb(99, 99, 99);
+    border-left-width: 2px;
+    border-right-width: 2px;
+    border-top-width: 2px;
+    border-bottom-width: 2px;
+    border-left-color: rgb(0, 0, 0);
+    border-right-color: rgb(0, 0, 0);
+    border-top-color: rgb(0, 0, 0);
+    border-bottom-color: rgb(0, 0, 0);
+    background-image: url('/Assets/InContextLevelEditor/Textures/arrowCross-removebg-preview.png#arrowCross-removebg-preview');
+    -unity-slice-left: 3;
+    -unity-slice-top: 3;
+    -unity-slice-right: 3;
+    -unity-slice-bottom: 3;
+}
+
+.InteractionToggleStyle:hover {
+    margin-left: 11px;
+    margin-right: 11px;
+    margin-top: 11px;
+    margin-bottom: 11px;
+    width: 50px;
+    height: 50px;
+    background-color: rgb(79, 79, 79);
+    border-left-width: 2px;
+    border-right-width: 2px;
+    border-top-width: 2px;
+    border-bottom-width: 2px;
+    border-left-color: rgb(0, 0, 0);
+    border-right-color: rgb(0, 0, 0);
+    border-top-color: rgb(0, 0, 0);
+    border-bottom-color: rgb(0, 0, 0);
+    background-image: url('/Assets/InContextLevelEditor/Textures/ArrowCrossIcon.png#ArrowCrossIcon');
+    -unity-slice-left: 3;
+    -unity-slice-top: 3;
+    -unity-slice-right: 3;
+    -unity-slice-bottom: 3;
+}
+
+.InteractionToggleStyle:active {
+    margin-left: 11px;
+    margin-right: 11px;
+    margin-top: 11px;
+    margin-bottom: 11px;
+    width: 50px;
+    height: 50px;
+    background-color: rgb(63, 63, 63);
+    border-left-width: 2px;
+    border-right-width: 2px;
+    border-top-width: 2px;
+    border-bottom-width: 2px;
+    border-left-color: rgb(0, 0, 0);
+    border-right-color: rgb(0, 0, 0);
+    border-top-color: rgb(0, 0, 0);
+    border-bottom-color: rgb(0, 0, 0);
+    background-image: url('/Assets/InContextLevelEditor/Textures/ArrowCrossIcon.png#ArrowCrossIcon');
+    -unity-slice-left: 3;
+    -unity-slice-top: 3;
+    -unity-slice-right: 3;
+    -unity-slice-bottom: 3;
+}
+
+.InteractionToggleStyle:checked {
+    margin-left: 11px;
+    margin-right: 11px;
+    margin-top: 11px;
+    margin-bottom: 11px;
+    width: 50px;
+    height: 50px;
+    background-color: rgb(48, 48, 48);
+    border-left-width: 2px;
+    border-right-width: 2px;
+    border-top-width: 2px;
+    border-bottom-width: 2px;
+    border-left-color: rgb(0, 0, 0);
+    border-right-color: rgb(0, 0, 0);
+    border-top-color: rgb(0, 0, 0);
+    border-bottom-color: rgb(0, 0, 0);
+    background-image: url('/Assets/InContextLevelEditor/Textures/ArrowCrossIcon.png#ArrowCrossIcon');
+    -unity-slice-left: 3;
+    -unity-slice-top: 3;
+    -unity-slice-right: 3;
+    -unity-slice-bottom: 3;
+    -unity-background-image-tint-color: rgba(221, 72, 0, 255);
+}
+
+.InteractionToggleStyle:disabled {
+    margin-left: 11px;
+    margin-right: 11px;
+    margin-top: 11px;
+    margin-bottom: 11px;
+    width: 50px;
+    height: 50px;
+    background-color: rgba(99, 99, 99, 0.5);
+    border-left-width: 2px;
+    border-right-width: 2px;
+    border-top-width: 2px;
+    border-bottom-width: 2px;
+    border-left-color: rgba(0, 0, 0, 0.5);
+    border-right-color: rgba(0, 0, 0, 0.5);
+    border-top-color: rgba(0, 0, 0, 0.5);
+    border-bottom-color: rgba(0, 0, 0, 0.5);
+    background-image: url('/Assets/InContextLevelEditor/Textures/arrowCross-removebg-preview.png#arrowCross-removebg-preview');
+    -unity-slice-left: 3;
+    -unity-slice-top: 3;
+    -unity-slice-right: 3;
+    -unity-slice-bottom: 3;
 }

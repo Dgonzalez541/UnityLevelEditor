@@ -10,10 +10,18 @@ using InContextLevelEditor.UI;
 
 namespace InContextLevelEditor.LevelEditor
 {
-    enum InteractionState
+    public enum InteractionState
     {
         Translate,
-        Rotate
+        Rotate,
+        Paint,
+        Intensity
+    }
+
+    public class InteractionStateEventArgs : EventArgs
+    {
+        public InteractionState Interaction {get; set;}
+        public bool Enabled {get; set;}
     }
 
     public class LevelEditorController : MonoBehaviour
@@ -29,15 +37,26 @@ namespace InContextLevelEditor.LevelEditor
 
         [SerializeField] MainWindowUIController mainWindowUIController;
 
+        public event EventHandler<InteractionStateEventArgs> OnInteractionStateChagneHandler;
+
         void Awake()
         {
-            CurrentInteraction = InteractionState.Rotate;
+            
             SpawnedEntities = new List<GameObject>();
 
             LoadAssets();
             SetEntityToPlace(defaultEntityAddress);
 
             mainWindowUIController.OnButtonPressHandler += OnEntitySelect;
+            mainWindowUIController.OnInteractionButtonPressHandler += OnInteractionSelect;
+
+            CurrentInteraction = InteractionState.Translate;
+            
+        }
+
+        private void OnInteractionSelect(object sender, InteractionSelectionEventArgs e)
+        {
+            CurrentInteraction = e.Interaction;
         }
 
         private void OnEntitySelect(object sender, EntitySelectionEventArgs e)
@@ -111,12 +130,12 @@ namespace InContextLevelEditor.LevelEditor
 
         public void SelectEntity(IEntity newEntity)
         {
-            DisableEntityInteractions(SelectedEntity);
+            SetEntityInteractions(SelectedEntity, false);
             UnhighlightAllEntities();
 
             SelectedEntity = newEntity;
             SelectedEntity.Highlight();
-            EnableEntityInteractions(SelectedEntity);
+            SetEntityInteractions(SelectedEntity, true);
         }
 
         void UnhighlightAllEntities()
@@ -132,7 +151,6 @@ namespace InContextLevelEditor.LevelEditor
 
             if(currentInteraction == InteractionState.Translate)
             {
-                Debug.Log("Translate");
                 Translate translate = new Translate(entity, action);
                 translate.Execute();
             }
@@ -142,37 +160,41 @@ namespace InContextLevelEditor.LevelEditor
                 Rotate rotate = new Rotate(entity, action);
                 rotate.Execute();
             }
-        }
 
-        void EnableEntityInteractions(IEntity entity)
-        {
-            //Enable Translate
-            //Enable Rotate
-            if(entity is IShapeEntity)
+            if(currentInteraction == InteractionState.Paint)
             {
-                //Enable Color change
-            }
 
-            if(entity is IEntity)
-            {
-                //Enable Intensity change
             }
         }
 
-        void DisableEntityInteractions(IEntity entity)
+        void SetEntityInteractions(IEntity entity, bool enabled)
         {
-            //Disable Translate
-            //Disable Rotate
+            EventHandler<InteractionStateEventArgs> handler = OnInteractionStateChagneHandler;
 
             if(entity is IShapeEntity)
             {
-                //Enable Color change
+                InteractionStateEventArgs args = new InteractionStateEventArgs();
+                args.Interaction = InteractionState.Paint;
+                args.Enabled = enabled;
+
+                if(handler != null)
+                    OnInteractionStateChagneHandler(this, args);
             }
 
-            if(entity is IEntity)
+            if(entity is ILightEntity)
             {
-                //Enable Intensity change
+                InteractionStateEventArgs args = new InteractionStateEventArgs();
+                args.Interaction = InteractionState.Intensity;
+                args.Enabled = enabled;
+
+                if(handler != null)
+                    OnInteractionStateChagneHandler(this, args);
             }
+        }
+
+        void InvokeEvent(EventHandler handler)
+        {
+
         }
     }
 
