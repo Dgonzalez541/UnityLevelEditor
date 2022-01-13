@@ -30,7 +30,7 @@ namespace InContextLevelEditor.Strategy
                 var worldPos = Mouse.current.position.ReadValue();
                 posDelta = (Vector3) Mouse.current.position.ReadValue() - prevPos;
                 Transform transform = entity.GameObject.transform;
-                if(Vector3.Dot(transform.up, Vector3.up) > 0)
+                if(Vector3.Dot(transform.up, Vector3.up) >= 0)
                 {
                     transform.Rotate(transform.up, -Vector3.Dot(posDelta, Camera.main.transform.right), Space.World);
                 }

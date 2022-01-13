@@ -98,7 +98,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   highlightMat: {fileID: 2100000, guid: 6944def15cef1174590f5c45e0f2321f, type: 2}
   unhighlightMat: {fileID: 2100000, guid: bf89c3851d1cf724e86c1d20ce117bab, type: 2}
-  coloredMat: {fileID: 2100000, guid: f7d8c659e7bab4245b7c41c466897539, type: 2}
 --- !u!65 &7849762343697759614
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -111,4 +110,4 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1.0000001, y: 2, z: 1.0000002}
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+  m_Center: {x: 0, y: 0, z: 0}
