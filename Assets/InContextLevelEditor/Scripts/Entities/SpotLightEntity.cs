@@ -11,33 +11,21 @@ namespace InContextLevelEditor.LevelEditor
 
         public GameObject GameObject {get{return gameObject;}}
 
+        [SerializeField] GameObject Visualizer;
+
         public void Highlight()
         {
-            throw new System.NotImplementedException();
-        }
-
-        public void OnDeselected()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void OnSelected()
-        {
-            throw new System.NotImplementedException();
+            Visualizer.SetActive(true);
         }
 
         public void Unhighlight()
         {
-            throw new System.NotImplementedException();
+            Visualizer.SetActive(false);
         }
 
         void Start()
         {
             Light = GetComponent<Light>();
-
-            //Create Directional Light
-            Light.type = LightType.Spot;
-            Light.intensity = 2;
         }
     }
 }

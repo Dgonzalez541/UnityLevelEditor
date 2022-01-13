@@ -19,14 +19,10 @@ namespace InContextLevelEditor.LevelEditor
         [SerializeField] Material unhighlightMat;
         Material coloredMat;
 
-        bool selected = false;
-
         void Awake()
         {
             rend = GetComponent<MeshRenderer>();
             meshFilter = GetComponent<MeshFilter>();
-
-            selected = true;
         }
 
         public void SetColor(Color color)
@@ -51,16 +47,6 @@ namespace InContextLevelEditor.LevelEditor
         public void Unhighlight()
         {
             GetComponent<Renderer>().material = unhighlightMat;
-        }
-
-        public void OnSelected()
-        {
-            selected = true;
-        }
-
-        public void OnDeselected()
-        {
-            selected = false;
         }
     }
 }
