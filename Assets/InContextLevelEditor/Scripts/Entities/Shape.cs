@@ -17,12 +17,13 @@ namespace InContextLevelEditor.LevelEditor
 
         [SerializeField] Material highlightMat;
         [SerializeField] Material unhighlightMat;
-        [SerializeField] Material coloredMat;
+            Material coloredMat;
 
         void Awake()
         {
             rend = GetComponent<MeshRenderer>();
             meshFilter = GetComponent<MeshFilter>();
+             coloredMat = new Material(Shader.Find("Universal Render Pipeline/Lit"));
         }
 
         public void SetColor(Color color)
@@ -36,7 +37,7 @@ namespace InContextLevelEditor.LevelEditor
             Debug.Log($"material: {GetComponent<Renderer>().material}");
 
             GetComponent<Renderer>().material = coloredMat;
-            
+           
         }
 
         public void SetMesh(Mesh mesh)
@@ -47,12 +48,12 @@ namespace InContextLevelEditor.LevelEditor
 
         public void Highlight()
         {
-            GetComponent<Renderer>().material = highlightMat;
+            //GetComponent<Renderer>().material = highlightMat;
         }
 
         public void Unhighlight()
         {
-            GetComponent<Renderer>().material = unhighlightMat;
+            //GetComponent<Renderer>().material = unhighlightMat;
         }
     }
 }

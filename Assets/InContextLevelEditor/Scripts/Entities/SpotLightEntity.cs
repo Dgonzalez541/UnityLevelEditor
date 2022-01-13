@@ -3,8 +3,12 @@ using UnityEngine;
 namespace InContextLevelEditor.LevelEditor
 {
     [RequireComponent(typeof(Light))]
+    [RequireComponent(typeof(MeshRenderer))]
     public class SpotLightEntity : MonoBehaviour, ILightEntity
     {
+        [SerializeField] Material highlightMat;
+        [SerializeField] Material unhighlightMat;
+        
         public float Intensity {get; private set;}
 
         public Light Light {get; private set;}
@@ -15,12 +19,12 @@ namespace InContextLevelEditor.LevelEditor
 
         public void Highlight()
         {
-            Visualizer.SetActive(true);
+            GetComponent<Renderer>().material = highlightMat;
         }
 
         public void Unhighlight()
         {
-            Visualizer.SetActive(false);
+            GetComponent<Renderer>().material = unhighlightMat;
         }
 
         void Start()
